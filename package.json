@@ -1,0 +1,30 @@
+{
+  "name": "mobx-state-tree-ts",
+  "version": "0.0.1",
+  "description": "A better typescript wrapper over mobx-state-tree",
+  "main": "dist/test.js",
+  "scripts": {
+    "test": "npm run build && node dist/test.js",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc -p ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xaviergonz/mobx-state-tree-ts.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xaviergonz/mobx-state-tree-ts/issues"
+  },
+  "homepage": "https://github.com/xaviergonz/mobx-state-tree-ts#readme",
+  "devDependencies": {
+    "rimraf": "^2.6.2",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.2"
+  },
+  "dependencies": {
+    "mobx": "^3.3.0",
+    "mobx-state-tree": "^0.12.0"
+  }
+}
