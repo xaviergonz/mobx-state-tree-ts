@@ -58,9 +58,33 @@ export function protect<S, M, WM, V, A>(target: IStateTreeNode<S, M, WM, V, A>):
 
 export const recordActions = mbst.recordActions;
 export const recordPatches = mbst.recordPatches;
-export const resolveIdentifier = mbst.resolveIdentifier; // TODO: improve
-export const resolvePath = mbst.resolvePath; // TODO: improve
-export const tryResolve = mbst.tryResolve; // TODO: improve
+
+export function resolveIdentifier<S, M, WM, A, V>(
+  type: IType<S, M, WM, A, V>,
+  target: IProtectedStateTreeNode<any, any, any, any, any>,
+  id: string | number
+): IProtectedStateTreeNode<S, M, WM, A, V> | undefined;
+export function resolveIdentifier<S, M, WM, A, V>(
+  type: IType<S, M, WM, A, V>,
+  target: IUnprotectedStateTreeNode<any, any, any, any, any>,
+  id: string | number
+): IUnprotectedStateTreeNode<S, M, WM, A, V> | undefined;
+export function resolveIdentifier<S, M, WM, A, V>(
+  type: IType<S, M, WM, A, V>,
+  target: IStateTreeNode<any, any, any, any, any>,
+  id: string | number
+): IStateTreeNode<S, M, WM, A, V> | undefined {
+  return mbst.resolveIdentifier(type as any, target, id) as any;
+}
+
+export function resolvePath<T>(target: IStateTreeNode<any, any, any, any, any>, path: string): T | undefined {
+  return mbst.resolvePath(target, path);
+}
+
+export function tryResolve<T>(target: IStateTreeNode<any, any, any, any, any>, path: string): T | undefined {
+  return mbst.tryResolve(target, path);
+}
+
 export const unescapeJsonPath = mbst.unescapeJsonPath;
 
 export function unprotect<S, M, WM, V, A>(target: IStateTreeNode<S, M, WM, V, A>): IUnprotectedStateTreeNode<S, M, WM, V, A> {

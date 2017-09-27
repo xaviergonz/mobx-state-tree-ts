@@ -1,10 +1,10 @@
 import { getSnapshot, protect, types, unprotect } from './index';
-import { onAction } from './operations';
+import { onAction, resolveIdentifier, resolvePath } from './operations';
 
 // anything other than 4 or 'hi' or 'hello' is compile error
-
 const typesHiOr4 = types.union(types.literal(4), types.literal('hi'), types.literal('hello'));
 const positiveNumber = types.refinement('positive number', types.number, (x) => x >= 0);
+const color = types.enumeration('color', [ 'red', 'green', 'blue' ]);
 
 // name could be moved to model().name('somename')
 const subModel = types.model()
@@ -24,6 +24,7 @@ const m = types.model()
   .prop('subModel1', subModel)
   .optProp('subModel2', types.immutable(subModel), { id: '0', subX: 5})
   .prop('subModelRef', types.reference(subModel))
+  .optProp('color', color, 'green')
   .views((self) => ({
       get xSquared() {
         // self.x = 20; // views cannot do model changes, good!
@@ -92,6 +93,13 @@ subModelRef.setSubY('hi');
 console.log(subModelRef.subY);
 console.log('REF', getSnapshot(subModelRef));
 
+const subModelRef3 = resolveIdentifier(subModel, node, '1');
+if (subModelRef3) {
+  // subModelRef3.subY = 'hi'; // good, since the main node is protected then this one is declared as protected as well
+  console.log('ref works', subModelRef3.subY);
+}
+
+
 const nodeSnapshot = getSnapshot(node);
 // nodeSnapshot.a = 40; // good, snapshots are protected
 console.log(nodeSnapshot);
@@ -117,6 +125,8 @@ const modelOnly: typeof m.ModelType = {
   y: 20,
   a: 30,
   b: 40,
+  color: 'red', // good, works!
+  // color: 'r', // good, this is not allowed
   subModel1: { // this has to be present, good!
     id: '100',
     subX: 5, // this has to be present, good!
@@ -202,8 +212,12 @@ console.log(getSnapshot(unprotectedStore));
 const simpleM1 = types.model().prop('x', types.number);
 const simpleM2 = types.model().prop('y', types.number);
 const simpleM3 = types.model().prop('z', types.number);
-const theunion  = types.union(simpleM1, simpleM2);
+const theunion  = types.union(simpleM1, simpleM2, simpleM3);
 const m1m2node = theunion.create({
-  y: 2,
+  x: 2,
 });
 console.log(getSnapshot(m1m2node));
+const subModel111 = resolvePath<typeof subModel.Node>(node, '/subModel1');
+if (subModel111) {
+  console.log(subModel111.subY);
+}

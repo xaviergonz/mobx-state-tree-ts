@@ -1,5 +1,6 @@
 import * as array from './array';
-import * as  compose from './compose';
+import * as compose from './compose';
+import * as enumeration from './enumeration';
 import * as frozen from './frozen';
 import * as identifier from './identifier';
 import * as immutable from './immutable';
@@ -26,9 +27,8 @@ export const types = {
   ...reference,
   ...refinement,
   ...union,
+  ...enumeration,
 
   // maybe is implemented as maybeProp('x', xType)
   // optional is implemented as optProp('x', default, xType)
-
-  // TODO: enumeration
 };
