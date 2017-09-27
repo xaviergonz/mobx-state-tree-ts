@@ -160,6 +160,7 @@ const mergedSnapshot: typeof mergedType.SnapshotType = {
 const Book = types.model('Book')
   .prop('title', types.string)
   .prop('price', types.number)
+  .prop('date', types.Date)
   .actions((self) => ({
     setPrice(newPrice: number) {
       self.price = newPrice;
@@ -173,19 +174,26 @@ const Store = types.model('Store')
 const store = Store.create({
   books: [{
     title: 'The Hidden Life of Trees: What They Feel, How They Communicate',
-    price: 24.95
+    price: 24.95,
+    date: 1234,
   }]
 });
 
-// store.books[0].title = "I hate trees!"
+// store.books[0].title = 'I hate trees!'; // good! not allowed since the node is in protected mode
 
 onAction(store, (act) => console.dir(act));
 
 const book = store.books[0];
 // book.price = 5; // good we can't
 book.setPrice(12.95);
+// book.date = 1234; // good we cant
+console.log(book.date.getMilliseconds());
 console.log(getSnapshot(store));
 
 const unprotectedStore = unprotect(store);
 unprotectedStore.books[0].price = 5; // good we can
+unprotectedStore.books[0].date = 12345;
+console.log(unprotectedStore.books[0].date);
+unprotectedStore.books[0].date = Date.now();
+console.log(unprotectedStore.books[0].date);
 console.log(getSnapshot(unprotectedStore));
