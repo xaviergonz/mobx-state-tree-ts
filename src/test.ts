@@ -90,6 +90,7 @@ const subModelRef = node.subModelRef;
 // subModelRef.subY = 4; // good, readonly
 subModelRef.setSubY('hi');
 console.log(subModelRef.subY);
+console.log('REF', getSnapshot(subModelRef));
 
 const nodeSnapshot = getSnapshot(node);
 // nodeSnapshot.a = 40; // good, snapshots are protected
