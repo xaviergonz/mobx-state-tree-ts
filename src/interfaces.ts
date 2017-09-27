@@ -58,7 +58,7 @@ export type IModelType<S, M, WM, V, A> /* extends mbst.IModelType<S, WM & V & A>
   prop<TPropName extends string, S1, M1, WM1, V1, A1>(pname: TPropName, type: IType<S1, M1, WM1, V1, A1>):
     IModelType<
       S & SinglePropertyObject<TPropName, S1>,
-      M & Readonly<SinglePropertyObject<TPropName, M1>>,
+      M & Readonly<SinglePropertyObject<TPropName, M1>>, // do not use DeepReadonly
       WM & SinglePropertyObject<TPropName, WM1>,
       V & SinglePropertyObject<TPropName, V1>,
       A & SinglePropertyObject<TPropName, A1>
@@ -68,7 +68,7 @@ export type IModelType<S, M, WM, V, A> /* extends mbst.IModelType<S, WM & V & A>
   optProp<TPropName extends string, S1, M1, WM1, V1, A1>(pname: TPropName, type: IType<S1, M1, WM1, V1, A1>, defValue: S1 | (() => S1)):
     IModelType<
       S & Partial<SinglePropertyObject<TPropName, S1>>,
-      M & Readonly<SinglePropertyObject<TPropName, M1>>,
+      M & Readonly<SinglePropertyObject<TPropName, M1>>, // do not use DeepReadonly
       WM & SinglePropertyObject<TPropName, WM1>,
       V & SinglePropertyObject<TPropName, V1>,
       A & SinglePropertyObject<TPropName, A1>
@@ -78,7 +78,7 @@ export type IModelType<S, M, WM, V, A> /* extends mbst.IModelType<S, WM & V & A>
   maybeProp<TPropName extends string, S1, M1, WM1, V1, A1>(pname: TPropName, type: IType<S1, M1, WM1, V1, A1>):
     IModelType<
       S & Partial<SinglePropertyObject<TPropName, S1 | null>>,
-      M & DeepReadonly<SinglePropertyObject<TPropName, M1 | null>>,
+      M & Readonly<SinglePropertyObject<TPropName, M1 | null>>, // do not use DeepReadonly
       WM & SinglePropertyObject<TPropName, WM1 | null>,
       V & SinglePropertyObject<TPropName, V1>,
       A & SinglePropertyObject<TPropName, A1>
