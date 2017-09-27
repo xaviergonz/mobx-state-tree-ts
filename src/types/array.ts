@@ -1,11 +1,12 @@
 import { IObservableArray } from 'mobx';
 import * as mbst from 'mobx-state-tree';
-import { IComplexType, IType } from '../';
+import { IComplexType, IProtectedStateTreeNode, IType, IUnprotectedStateTreeNode } from '../';
+import { IReadOnlyObservableArray } from '../utils';
 
 export function array<S, M, WM, V, A>(baseType: IType<S, M, WM, V, A>): IComplexType<
   S[],
-  ReadonlyArray<M>, // TODO: I think this should be a readonly interface of IObservableArray
-  IObservableArray<WM>,
+  IReadOnlyObservableArray<IProtectedStateTreeNode<S, M, WM, V, A>>,
+  IObservableArray<IUnprotectedStateTreeNode<S, M, WM, V, A>>,
   {}, // V
   {} // A
   > {

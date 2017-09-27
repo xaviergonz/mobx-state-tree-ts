@@ -1,5 +1,5 @@
 import * as mbst from 'mobx-state-tree';
-import { IDeepReadonly, ISinglePropertyObject } from './utils';
+import { DeepReadonly, SinglePropertyObject } from './utils';
 
 // tslint:disable:interface-over-type-literal
 // tslint:disable:no-empty-interface
@@ -31,17 +31,11 @@ export type IType<S, M, WM, V, A> = {
 
   readonly name: string;
   create(snapshot?: S, environment?: any): IProtectedStateTreeNode<S, M, WM, V, A>;
-
-  // needs implementation
-  union<S1, M1, WM1, V1, A1>(
-    t1: IType<S1, M1, WM1, V1, A1>,
-    dispatch?: (sn: S | S1) => IType<S | S1, M | M1, WM | WM1, V | V1, A | A1>
-  ): IType<S | S1, M | M1, WM | WM1, V | V1, A | A1>
 };
 
 export type ISimpleType<T> = IType<
   T, // S
-  Readonly<T>, // M
+  DeepReadonly<T>, // M
   T, // WM
   {}, // V
   {} // A
@@ -63,38 +57,32 @@ export type IModelType<S, M, WM, V, A> /* extends mbst.IModelType<S, WM & V & A>
   // needs implementation
   prop<TPropName extends string, S1, M1, WM1, V1, A1>(pname: TPropName, type: IType<S1, M1, WM1, V1, A1>):
     IModelType<
-      S & ISinglePropertyObject<TPropName, S1>,
-      M & IDeepReadonly<ISinglePropertyObject<TPropName, M1>>,
-      WM & ISinglePropertyObject<TPropName, WM1>,
-      V & ISinglePropertyObject<TPropName, V1>,
-      A & ISinglePropertyObject<TPropName, A1>
+      S & SinglePropertyObject<TPropName, S1>,
+      M & Readonly<SinglePropertyObject<TPropName, M1>>,
+      WM & SinglePropertyObject<TPropName, WM1>,
+      V & SinglePropertyObject<TPropName, V1>,
+      A & SinglePropertyObject<TPropName, A1>
       >;
 
   // needs implementation
   optProp<TPropName extends string, S1, M1, WM1, V1, A1>(pname: TPropName, type: IType<S1, M1, WM1, V1, A1>, defValue: S1 | (() => S1)):
     IModelType<
-      S & Partial<ISinglePropertyObject<TPropName, S1>>,
-      M & IDeepReadonly<ISinglePropertyObject<TPropName, M1>>,
-      WM & ISinglePropertyObject<TPropName, WM1>,
-      V & ISinglePropertyObject<TPropName, V1>,
-      A & ISinglePropertyObject<TPropName, A1>
+      S & Partial<SinglePropertyObject<TPropName, S1>>,
+      M & Readonly<SinglePropertyObject<TPropName, M1>>,
+      WM & SinglePropertyObject<TPropName, WM1>,
+      V & SinglePropertyObject<TPropName, V1>,
+      A & SinglePropertyObject<TPropName, A1>
       >;
 
   // needs implementation
   maybeProp<TPropName extends string, S1, M1, WM1, V1, A1>(pname: TPropName, type: IType<S1, M1, WM1, V1, A1>):
     IModelType<
-      S & Partial<ISinglePropertyObject<TPropName, S1 | null>>,
-      M & IDeepReadonly<ISinglePropertyObject<TPropName, M1 | null>>,
-      WM & ISinglePropertyObject<TPropName, WM1 | null>,
-      V & ISinglePropertyObject<TPropName, V1>,
-      A & ISinglePropertyObject<TPropName, A1>
+      S & Partial<SinglePropertyObject<TPropName, S1 | null>>,
+      M & DeepReadonly<SinglePropertyObject<TPropName, M1 | null>>,
+      WM & SinglePropertyObject<TPropName, WM1 | null>,
+      V & SinglePropertyObject<TPropName, V1>,
+      A & SinglePropertyObject<TPropName, A1>
       >;
-
-  // needs implementation
-  compose<S1, M1, WM1, V1, A1>(
-    t1: IModelType<S1, M1, WM1, V1, A1>,
-    name?: string
-  ): IModelType<S & S1, M & M1, WM & WM1, V & V1, A & A1>;
 
   preProcessSnapshot(fn: (snapshot: S) => S): IModelType<S, M, WM, V, A>;
 

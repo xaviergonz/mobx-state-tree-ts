@@ -21,14 +21,10 @@ ObjectTypePrototype.maybeProp = function(pname: string, type: any): any {
   });
 };
 
-ObjectTypePrototype.compose = function(t1: any, name: any): any {
-  if (name) {
-    return mbst.types.compose(name, this, t1);
-  }
-  return mbst.types.compose(this, t1);
-};
 
 // polyfill all other types
+// TODO: remove this section, since union is now ok as usual
+/*
 const allPrototypes: any[] = [
   mbst.types.null, // CoreType
   mbst.types.map(mbst.types.number), // MapType
@@ -58,3 +54,4 @@ allPrototypes.forEach((p: any) => {
     return _union(this, t, dispatch);
   };
 });
+*/

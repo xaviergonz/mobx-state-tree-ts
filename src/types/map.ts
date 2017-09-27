@@ -1,10 +1,13 @@
 import * as mbst from 'mobx-state-tree';
-import { IComplexType, IType } from '../';
+import { IComplexType, IProtectedStateTreeNode, IType, IUnprotectedStateTreeNode } from '../';
+import { IReadonlyExtendedObservableMap } from '../utils';
 
 export function map<S, M, WM, V, A>(baseType: IType<S, M, WM, V, A>): IComplexType<
-  { [k: string]: S },
-  Readonly<{ [k: string]: M }>, // TODO: I think this should be a readonly interface of IExtendedObservable
-  mbst.IExtendedObservableMap<WM>,
+  {
+    [k: string]: S
+  },
+  IReadonlyExtendedObservableMap<IProtectedStateTreeNode<S, M, WM, V, A>>,
+  mbst.IExtendedObservableMap<IUnprotectedStateTreeNode<S, M, WM, V, A>>,
   {},
   {}
   > {

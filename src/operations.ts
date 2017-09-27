@@ -1,6 +1,6 @@
 import * as mbst from 'mobx-state-tree';
 import { IProtectedStateTreeNode, IStateTreeNode, IType, IUnprotectedStateTreeNode } from './interfaces';
-import { IDeepReadonly } from './utils';
+import { DeepReadonly } from './utils';
 
 // tslint:disable:interface-over-type-literal
 // tslint:disable:no-empty-interface
@@ -29,7 +29,7 @@ export const getRelativePath = mbst.getRelativePath;
 export const getRoot = mbst.getRoot;
 
 // generated snapshots are readonly
-export function getSnapshot<S, M, WM, V, A>(target: IStateTreeNode<S, M, WM, V, A>): IDeepReadonly<S> {
+export function getSnapshot<S, M, WM, V, A>(target: IStateTreeNode<S, M, WM, V, A>): DeepReadonly<S> {
   return mbst.getSnapshot(target);
 }
 
