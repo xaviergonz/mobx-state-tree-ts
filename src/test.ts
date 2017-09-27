@@ -198,3 +198,12 @@ console.log(unprotectedStore.books[0].date);
 unprotectedStore.books[0].date = Date.now();
 console.log(unprotectedStore.books[0].date);
 console.log(getSnapshot(unprotectedStore));
+
+const simpleM1 = types.model().prop('x', types.number);
+const simpleM2 = types.model().prop('y', types.number);
+const simpleM3 = types.model().prop('z', types.number);
+const theunion  = types.union(simpleM1, simpleM2);
+const m1m2node = theunion.create({
+  y: 2,
+});
+console.log(getSnapshot(m1m2node));
