@@ -1,15 +1,13 @@
 import * as mbst from 'mobx-state-tree';
-import { IComplexType, IProtectedStateTreeNode, IType, IUnprotectedStateTreeNode } from '../';
+import { IProtectedStateTreeNode, IType, IUnprotectedStateTreeNode, OComplexType } from '../';
 import { IReadonlyExtendedObservableMap } from '../utils';
 
-export function map<S, M, WM, V, A>(baseType: IType<S, M, WM, V, A>): IComplexType<
+export function map<S, M, WM>(baseType: IType<S, M, WM>): OComplexType<
   {
     [k: string]: S
   },
-  IReadonlyExtendedObservableMap<IProtectedStateTreeNode<S, M, WM, V, A>>,
-  mbst.IExtendedObservableMap<IUnprotectedStateTreeNode<S, M, WM, V, A>>,
-  {},
-  {}
+  IReadonlyExtendedObservableMap<IProtectedStateTreeNode<S, M, WM>>,
+  mbst.IExtendedObservableMap<IUnprotectedStateTreeNode<S, M, WM>>
   > {
   return mbst.types.map(baseType as any) as any;
 }

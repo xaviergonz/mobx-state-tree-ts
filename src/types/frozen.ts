@@ -1,5 +1,6 @@
 import * as mbst from 'mobx-state-tree';
-import { IType } from '../';
+// noinspection ES6UnusedImports
+import { IType, OType } from '../';
 import { DeepReadonly } from '../utils';
 
-export const frozen = (mbst.types.frozen as any) as IType<any, DeepReadonly<any>, any, {}, {}>;
+export const frozen = (mbst.types.frozen as any) as OType<any, DeepReadonly<any>, any>;

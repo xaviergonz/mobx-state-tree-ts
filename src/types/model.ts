@@ -1,12 +1,10 @@
 import * as mbst from 'mobx-state-tree';
-import { IModelType } from '../';
+import { OModelType } from '../';
 
-export function model(name?: string): IModelType<
+export function model(name?: string): OModelType<
   {}, // S
   Readonly<{}>, // M
-  {}, // WM
-  {}, // V
-  {} // A
+  {} // WM
   > {
   if (name) {
     return mbst.types.model(name, {}) as any;

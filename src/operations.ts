@@ -1,4 +1,35 @@
+// noinspection ES6UnusedImports
 import * as mbst from 'mobx-state-tree';
+import {
+  addDisposer,
+  addMiddleware,
+  applyAction,
+  applyPatch,
+  clone,
+  decorate,
+  destroy,
+  detach,
+  escapeJsonPath,
+  getChildType,
+  getEnv,
+  getParent,
+  getPath,
+  getPathParts,
+  getRelativePath,
+  getRoot,
+  hasParent,
+  isAlive,
+  isProtected,
+  isRoot,
+  onAction,
+  onPatch,
+  onSnapshot,
+  process,
+  recordActions,
+  recordPatches,
+  unescapeJsonPath,
+  walk
+} from 'mobx-state-tree';
 import { IProtectedStateTreeNode, IStateTreeNode, IType, IUnprotectedStateTreeNode } from './interfaces';
 import { DeepReadonly } from './utils';
 
@@ -6,90 +37,86 @@ import { DeepReadonly } from './utils';
 // tslint:disable:no-empty-interface
 
 // operations
-export const addDisposer = mbst.addDisposer;
-export const addMiddleware = mbst.addMiddleware;
-export const applyAction = mbst.applyAction;
-export const applyPatch = mbst.applyPatch;
+export {
+  addDisposer,
+  addMiddleware,
+  applyAction,
+  applyPatch,
+  clone,
+  decorate,
+  destroy,
+  detach,
+  escapeJsonPath,
+  getChildType, // TODO: maybe can be improved?
+  getEnv,
+  getParent,
+  getPath,
+  getPathParts,
+  getRelativePath,
+  getRoot,
+  hasParent,
+  isAlive,
+  isProtected,
+  isRoot,
+  onAction,
+  onPatch,
+  onSnapshot,
+  process,
+  recordActions,
+  recordPatches,
+  unescapeJsonPath,
+  walk,
+};
 
-export function applySnapshot<S, M, WM, V, A>(target: IStateTreeNode<S, M, WM, V, A>, snapshot: S): void {
+export function applySnapshot<S, M, WM>(target: IStateTreeNode<S, M, WM>, snapshot: S): void {
   mbst.applySnapshot(target, snapshot);
 }
 
-export const clone = mbst.clone;
-export const decorate = mbst.decorate;
-export const destroy = mbst.destroy;
-export const detach = mbst.detach;
-export const escapeJsonPath = mbst.escapeJsonPath;
-export const getChildType = mbst.getChildType; // TODO: maybe can be improved?
-export const getEnv = mbst.getEnv;
-export const getParent = mbst.getParent;
-export const getPath = mbst.getPath;
-export const getPathParts = mbst.getPathParts;
-export const getRelativePath = mbst.getRelativePath;
-export const getRoot = mbst.getRoot;
-
 // generated snapshots are readonly
-export function getSnapshot<S, M, WM, V, A>(target: IStateTreeNode<S, M, WM, V, A>): DeepReadonly<S> {
+export function getSnapshot<S, M, WM>(target: IStateTreeNode<S, M, WM>): DeepReadonly<S> {
   return mbst.getSnapshot(target);
 }
 
-export function getType<S, M, WM, V, A>(object: IStateTreeNode<S, M, WM, V, A>): IType<S, M, WM, V, A> {
+export function getType<S, M, WM>(object: IStateTreeNode<S, M, WM>): IType<S, M, WM> {
   return mbst.getType(object) as any;
 }
 
-export const hasParent = mbst.hasParent;
-export const isAlive = mbst.isAlive;
-export const isProtected = mbst.isProtected;
-export const isRoot = mbst.isRoot;
-
-export function isStateTreeNode<S, M, WM, V, A>(object: IStateTreeNode<S, M, WM, V, A>): object is IStateTreeNode<S, M, WM, V, A> {
+export function isStateTreeNode<S, M, WM>(object: IStateTreeNode<S, M, WM>): object is IStateTreeNode<S, M, WM> {
   return mbst.isStateTreeNode(object);
 }
 
-export const onAction = mbst.onAction;
-export const onPatch = mbst.onPatch;
-export const onSnapshot = mbst.onSnapshot;
-export const process = mbst.process;
-
-export function protect<S, M, WM, V, A>(target: IStateTreeNode<S, M, WM, V, A>): IProtectedStateTreeNode<S, M, WM, V, A> {
+export function protect<S, M, WM>(target: IStateTreeNode<S, M, WM>): IProtectedStateTreeNode<S, M, WM> {
   mbst.protect(target);
-  return target as IProtectedStateTreeNode<S, M, WM, V, A>;
+  return target as IProtectedStateTreeNode<S, M, WM>;
 }
 
-export const recordActions = mbst.recordActions;
-export const recordPatches = mbst.recordPatches;
-
 export function resolveIdentifier<S, M, WM, A, V>(
-  type: IType<S, M, WM, A, V>,
-  target: IProtectedStateTreeNode<any, any, any, any, any>,
+  type: IType<S, M, WM>,
+  target: IProtectedStateTreeNode<any, any, any>,
   id: string | number
-): IProtectedStateTreeNode<S, M, WM, A, V> | undefined;
-export function resolveIdentifier<S, M, WM, A, V>(
-  type: IType<S, M, WM, A, V>,
-  target: IUnprotectedStateTreeNode<any, any, any, any, any>,
+): IProtectedStateTreeNode<S, M, WM> | undefined;
+export function resolveIdentifier<S, M, WM>(
+  type: IType<S, M, WM>,
+  target: IUnprotectedStateTreeNode<any, any, any>,
   id: string | number
-): IUnprotectedStateTreeNode<S, M, WM, A, V> | undefined;
-export function resolveIdentifier<S, M, WM, A, V>(
-  type: IType<S, M, WM, A, V>,
-  target: IStateTreeNode<any, any, any, any, any>,
+): IUnprotectedStateTreeNode<S, M, WM> | undefined;
+export function resolveIdentifier<S, M, WM>(
+  type: IType<S, M, WM>,
+  target: IStateTreeNode<any, any, any>,
   id: string | number
-): IStateTreeNode<S, M, WM, A, V> | undefined {
+): IStateTreeNode<S, M, WM> | undefined {
   return mbst.resolveIdentifier(type as any, target, id) as any;
 }
 
-export function resolvePath<T>(target: IStateTreeNode<any, any, any, any, any>, path: string): T | undefined {
+export function resolvePath<T>(target: IStateTreeNode<any, any, any>, path: string): T | undefined {
   return mbst.resolvePath(target, path);
 }
 
-export function tryResolve<T>(target: IStateTreeNode<any, any, any, any, any>, path: string): T | undefined {
+export function tryResolve<T>(target: IStateTreeNode<any, any, any>, path: string): T | undefined {
   return mbst.tryResolve(target, path);
 }
 
-export const unescapeJsonPath = mbst.unescapeJsonPath;
-
-export function unprotect<S, M, WM, V, A>(target: IStateTreeNode<S, M, WM, V, A>): IUnprotectedStateTreeNode<S, M, WM, V, A> {
+export function unprotect<S, M, WM>(target: IStateTreeNode<S, M, WM>): IUnprotectedStateTreeNode<S, M, WM> {
   mbst.unprotect(target);
-  return target as IUnprotectedStateTreeNode<S, M, WM, V, A>;
+  return target as IUnprotectedStateTreeNode<S, M, WM>;
 }
-
-export const walk = mbst.walk;

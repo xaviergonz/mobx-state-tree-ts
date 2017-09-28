@@ -25,6 +25,7 @@ const m = types.model()
   .optProp('subModel2', types.immutable(subModel), { id: '0', subX: 5})
   .prop('subModelRef', types.reference(subModel))
   .optProp('color', color, 'green')
+  .maybeProp('color2', color)
   .views((self) => ({
       get xSquared() {
         // self.x = 20; // views cannot do model changes, good!
@@ -75,14 +76,30 @@ const node = m.create({
   },
   subModelRef: '1'
 });
+
 const a: number = node.xSquared * node.aSquared;
 node.setASquared();
 node.setXSquared();
 // node.x = 5; // fails since it is protected by default
+
 const unprotectedNode = unprotect(node);
 unprotectedNode.a = 5; // ok
 unprotectedNode.subModel1.subX = 10; // ok
+unprotectedNode.subModel1.subY = 4;
 unprotectedNode.subModelRef.subY = 'hello'; // good, not readonly since unprotected
+unprotectedNode.subModel1 = subModel.create({ // good, we can assign a node
+  id: '1',
+  subX: 8,
+});
+unprotectedNode.subModel1 = { // kinda MEH, we can assign a snapshot but we need to typecast it to the model type
+  id: '1',
+  subX: 7
+} as typeof subModel.WriteNodeType;
+const aaa: string | number = unprotectedNode.subModel1.subY;
+const colorStr: string | null = unprotectedNode.color2;
+unprotectedNode.color2 = 'red';
+unprotectedNode.color2 = null;
+
 const protectedNode = protect(unprotectedNode);
 // protectedNode.x = 5; // fail since it is once more protected
 // protectedNode.subModel1.subX = 6; // subobjs are protected as well
@@ -118,7 +135,7 @@ const nodeSnapshot2: typeof m.SnapshotType = {
   subModelRef: '100',
 };
 nodeSnapshot2.x = 20;
-
+/*
 const modelOnly: typeof m.ModelType = {
   id2: 200,
   x: 10,
@@ -127,6 +144,7 @@ const modelOnly: typeof m.ModelType = {
   b: 40,
   color: 'red', // good, works!
   // color: 'r', // good, this is not allowed
+  color2: null,
   subModel1: { // this has to be present, good!
     id: '100',
     subX: 5, // this has to be present, good!
@@ -146,6 +164,7 @@ const modelOnly: typeof m.ModelType = {
   }
 };
 // modelOnly.x = 20; // error: cannot write to a model type
+*/
 
 // const brokenModelType: typeof m.ModelType = { // error: y is missing
 //   x: 10,
@@ -180,15 +199,26 @@ const Book = types.model('Book')
 
 const Store = types.model('Store')
   .prop('books', types.array(Book))
-  ;
+  .optProp('booksMap', types.map(Book), {})
+;
 
 const store = Store.create({
   books: [{
     title: 'The Hidden Life of Trees: What They Feel, How They Communicate',
     price: 24.95,
     date: 1234,
-  }]
+  }],
+  booksMap: {
+    111: {
+      title: 'The Hidden Life of Trees: What They Feel, How They Communicate',
+      price: 24.95,
+      date: 1234,
+    }
+  }
 });
+
+console.log('MAP TITLE:', store.booksMap.get('111')!.title);
+// store.booksMap.set // good no setter
 
 // store.books[0].title = 'I hate trees!'; // good! not allowed since the node is in protected mode
 
@@ -201,6 +231,8 @@ book.setPrice(12.95);
 console.log(book.date.getMilliseconds());
 console.log(getSnapshot(store));
 
+// store.books[0] = {}; // good, not allowed
+
 const unprotectedStore = unprotect(store);
 unprotectedStore.books[0].price = 5; // good we can
 unprotectedStore.books[0].date = 12345;
@@ -209,7 +241,21 @@ unprotectedStore.books[0].date = Date.now();
 console.log(unprotectedStore.books[0].date);
 console.log(getSnapshot(unprotectedStore));
 
-const simpleM1 = types.model().prop('x', types.number);
+unprotectedStore.books[0] = Book.create({
+  title: 'some title',
+  price: 4,
+  date: 1234
+}) as typeof Book.WriteNodeType; // not ok, shame this is needed when the model is unprotected
+
+unprotectedStore.booksMap.set('111', {
+  title: 'title set on setter',
+  price: 24.95,
+  date: 1234,
+} as typeof Book.WriteNodeType);
+unprotectedStore.booksMap.get('111')!.title = 'title set on getter';
+console.log('MAP TEST 2', getSnapshot(unprotectedStore));
+
+const simpleM1 = types.model().prop('x', types.number).optProp('a', types.number, 4);
 const simpleM2 = types.model().prop('y', types.number);
 const simpleM3 = types.model().prop('z', types.number);
 const theunion  = types.union(simpleM1, simpleM2, simpleM3);
@@ -217,7 +263,7 @@ const m1m2node = theunion.create({
   x: 2,
 });
 console.log(getSnapshot(m1m2node));
-const subModel111 = resolvePath<typeof subModel.Node>(node, '/subModel1');
+const subModel111 = resolvePath<typeof subModel.ReadonlyNodeType>(node, '/subModel1');
 if (subModel111) {
   console.log(subModel111.subY);
 }

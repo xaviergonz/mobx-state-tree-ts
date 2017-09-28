@@ -1,473 +1,419 @@
 import * as mbst from 'mobx-state-tree';
-import { IComplexType, IType } from '../';
+import { IComplexType, IType, OComplexType } from '../';
 
 // up to 10 types, after that the type is lost as any
 // it is ok to upgrade/downgrade it to IComplexType since unions loose their ability to be composed (though they still can be snapshotted)
 
 // without dispatch
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2
+  S1, M1, WM1,
+  S2, M2, WM2
   >(
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+): OComplexType<
   S1 | S2,
   M1 | M2,
-  WM1 | WM2,
-  V1 | V2,
-  A1 | A2
+  WM1 | WM2
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3
   >(
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+): OComplexType<
   S1 | S2 | S3,
   M1 | M2 | M3,
-  WM1 | WM2 | WM3,
-  V1 | V2 | V3,
-  A1 | A2 | A3
+  WM1 | WM2 | WM3
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3,
-  S4, M4, WM4, V4, A4
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3,
+  S4, M4, WM4
   >(
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-  t4: IType<S4, M4, WM4, V4, A4>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+  t4: IType<S4, M4, WM4>,
+): OComplexType<
   S1 | S2 | S3 | S4,
   M1 | M2 | M3 | M4,
-  WM1 | WM2 | WM3 | WM4,
-  V1 | V2 | V3 | V4,
-  A1 | A2 | A3 | A4
+  WM1 | WM2 | WM3 | WM4
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3,
-  S4, M4, WM4, V4, A4,
-  S5, M5, WM5, V5, A5
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3,
+  S4, M4, WM4,
+  S5, M5, WM5
   >(
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-  t4: IType<S4, M4, WM4, V4, A4>,
-  t5: IType<S5, M5, WM5, V5, A5>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+  t4: IType<S4, M4, WM4>,
+  t5: IType<S5, M5, WM5>,
+): OComplexType<
   S1 | S2 | S3 | S4 | S5,
   M1 | M2 | M3 | M4 | M5,
-  WM1 | WM2 | WM3 | WM4 | WM5,
-  V1 | V2 | V3 | V4 | V5,
-  A1 | A2 | A3 | A4 | A5
+  WM1 | WM2 | WM3 | WM4 | WM5
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3,
-  S4, M4, WM4, V4, A4,
-  S5, M5, WM5, V5, A5,
-  S6, M6, WM6, V6, A6
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3,
+  S4, M4, WM4,
+  S5, M5, WM5,
+  S6, M6, WM6
   >(
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-  t4: IType<S4, M4, WM4, V4, A4>,
-  t5: IType<S5, M5, WM5, V5, A5>,
-  t6: IType<S6, M6, WM6, V6, A6>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+  t4: IType<S4, M4, WM4>,
+  t5: IType<S5, M5, WM5>,
+  t6: IType<S6, M6, WM6>,
+): OComplexType<
   S1 | S2 | S3 | S4 | S5 | S6,
   M1 | M2 | M3 | M4 | M5 | M6,
-  WM1 | WM2 | WM3 | WM4 | WM5 | WM6,
-  V1 | V2 | V3 | V4 | V5 | V6,
-  A1 | A2 | A3 | A4 | A5 | A6
+  WM1 | WM2 | WM3 | WM4 | WM5 | WM6
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3,
-  S4, M4, WM4, V4, A4,
-  S5, M5, WM5, V5, A5,
-  S6, M6, WM6, V6, A6,
-  S7, M7, WM7, V7, A7
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3,
+  S4, M4, WM4,
+  S5, M5, WM5,
+  S6, M6, WM6,
+  S7, M7, WM7
   >(
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-  t4: IType<S4, M4, WM4, V4, A4>,
-  t5: IType<S5, M5, WM5, V5, A5>,
-  t6: IType<S6, M6, WM6, V6, A6>,
-  t7: IType<S7, M7, WM7, V7, A7>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+  t4: IType<S4, M4, WM4>,
+  t5: IType<S5, M5, WM5>,
+  t6: IType<S6, M6, WM6>,
+  t7: IType<S7, M7, WM7>,
+): OComplexType<
   S1 | S2 | S3 | S4 | S5 | S6 | S7,
   M1 | M2 | M3 | M4 | M5 | M6 | M7,
-  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7,
-  V1 | V2 | V3 | V4 | V5 | V6 | V7,
-  A1 | A2 | A3 | A4 | A5 | A6 | A7
+  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3,
-  S4, M4, WM4, V4, A4,
-  S5, M5, WM5, V5, A5,
-  S6, M6, WM6, V6, A6,
-  S7, M7, WM7, V7, A7,
-  S8, M8, WM8, V8, A8
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3,
+  S4, M4, WM4,
+  S5, M5, WM5,
+  S6, M6, WM6,
+  S7, M7, WM7,
+  S8, M8, WM8
   >(
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-  t4: IType<S4, M4, WM4, V4, A4>,
-  t5: IType<S5, M5, WM5, V5, A5>,
-  t6: IType<S6, M6, WM6, V6, A6>,
-  t7: IType<S7, M7, WM7, V7, A7>,
-  t8: IType<S8, M8, WM8, V8, A8>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+  t4: IType<S4, M4, WM4>,
+  t5: IType<S5, M5, WM5>,
+  t6: IType<S6, M6, WM6>,
+  t7: IType<S7, M7, WM7>,
+  t8: IType<S8, M8, WM8>,
+): OComplexType<
   S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8,
   M1 | M2 | M3 | M4 | M5 | M6 | M7 | M8,
-  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8,
-  V1 | V2 | V3 | V4 | V5 | V6 | V7 | V8,
-  A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8
+  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3,
-  S4, M4, WM4, V4, A4,
-  S5, M5, WM5, V5, A5,
-  S6, M6, WM6, V6, A6,
-  S7, M7, WM7, V7, A7,
-  S8, M8, WM8, V8, A8,
-  S9, M9, WM9, V9, A9
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3,
+  S4, M4, WM4,
+  S5, M5, WM5,
+  S6, M6, WM6,
+  S7, M7, WM7,
+  S8, M8, WM8,
+  S9, M9, WM9
   >(
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-  t4: IType<S4, M4, WM4, V4, A4>,
-  t5: IType<S5, M5, WM5, V5, A5>,
-  t6: IType<S6, M6, WM6, V6, A6>,
-  t7: IType<S7, M7, WM7, V7, A7>,
-  t8: IType<S8, M8, WM8, V8, A8>,
-  t9: IType<S9, M9, WM9, V9, A9>
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+  t4: IType<S4, M4, WM4>,
+  t5: IType<S5, M5, WM5>,
+  t6: IType<S6, M6, WM6>,
+  t7: IType<S7, M7, WM7>,
+  t8: IType<S8, M8, WM8>,
+  t9: IType<S9, M9, WM9>
+): OComplexType<
   S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9,
   M1 | M2 | M3 | M4 | M5 | M6 | M7 | M8 | M9,
-  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8 | WM9,
-  V1 | V2 | V3 | V4 | V5 | V6 | V7 | V8 | V9,
-  A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8 | A9
+  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8 | WM9
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3,
-  S4, M4, WM4, V4, A4,
-  S5, M5, WM5, V5, A5,
-  S6, M6, WM6, V6, A6,
-  S7, M7, WM7, V7, A7,
-  S8, M8, WM8, V8, A8,
-  S9, M9, WM9, V9, A9,
-  S10, M10, WM10, V10, A10
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3,
+  S4, M4, WM4,
+  S5, M5, WM5,
+  S6, M6, WM6,
+  S7, M7, WM7,
+  S8, M8, WM8,
+  S9, M9, WM9,
+  S10, M10, WM10
   >(
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-  t4: IType<S4, M4, WM4, V4, A4>,
-  t5: IType<S5, M5, WM5, V5, A5>,
-  t6: IType<S6, M6, WM6, V6, A6>,
-  t7: IType<S7, M7, WM7, V7, A7>,
-  t8: IType<S8, M8, WM8, V8, A8>,
-  t9: IType<S9, M9, WM9, V9, A9>,
-  t10: IType<S10, M10, WM10, V10, A10>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+  t4: IType<S4, M4, WM4>,
+  t5: IType<S5, M5, WM5>,
+  t6: IType<S6, M6, WM6>,
+  t7: IType<S7, M7, WM7>,
+  t8: IType<S8, M8, WM8>,
+  t9: IType<S9, M9, WM9>,
+  t10: IType<S10, M10, WM10>
+): OComplexType<
   S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9 | S10,
   M1 | M2 | M3 | M4 | M5 | M6 | M7 | M8 | M9 | M10,
-  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8 | WM9 | WM10,
-  V1 | V2 | V3 | V4 | V5 | V6 | V7 | V8 | V9 | V10,
-  A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8 | A9 | A10
+  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8 | WM9 | WM10
   >;
 
 
 // with dispatch
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2
+  S1, M1, WM1,
+  S2, M2, WM2
   >(
   dispatch: (sn: S1 | S2) => IType<
     S1 | S2,
     M1 | M2,
-    WM1 | WM2,
-    V1 | V2,
-    A1 | A2
+    WM1 | WM2
     >,
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+): OComplexType<
   S1 | S2,
   M1 | M2,
-  WM1 | WM2,
-  V1 | V2,
-  A1 | A2
+  WM1 | WM2
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3
   >(
   dispatch: (sn: S1 | S2 | S3) => IType<
     S1 | S2 | S3,
     M1 | M2 | M3,
-    WM1 | WM2 | WM3,
-    V1 | V2 | V3,
-    A1 | A2 | A3
+    WM1 | WM2 | WM3
     >,
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+): OComplexType<
   S1 | S2 | S3,
   M1 | M2 | M3,
-  WM1 | WM2 | WM3,
-  V1 | V2 | V3,
-  A1 | A2 | A3
+  WM1 | WM2 | WM3
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3,
-  S4, M4, WM4, V4, A4
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3,
+  S4, M4, WM4
   >(
   dispatch: (sn: S1 | S2 | S3 | S4) => IType<
     S1 | S2 | S3 | S4,
     M1 | M2 | M3 | M4,
-    WM1 | WM2 | WM3 | WM4,
-    V1 | V2 | V3 | V4,
-    A1 | A2 | A3 | A4
+    WM1 | WM2 | WM3 | WM4
     >,
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-  t4: IType<S4, M4, WM4, V4, A4>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+  t4: IType<S4, M4, WM4>,
+): OComplexType<
   S1 | S2 | S3 | S4,
   M1 | M2 | M3 | M4,
-  WM1 | WM2 | WM3 | WM4,
-  V1 | V2 | V3 | V4,
-  A1 | A2 | A3 | A4
+  WM1 | WM2 | WM3 | WM4
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3,
-  S4, M4, WM4, V4, A4,
-  S5, M5, WM5, V5, A5
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3,
+  S4, M4, WM4,
+  S5, M5, WM5
   >(
   dispatch: (sn: S1 | S2 | S3 | S4 | S5) => IType<
     S1 | S2 | S3 | S4 | S5,
     M1 | M2 | M3 | M4 | M5,
-    WM1 | WM2 | WM3 | WM4 | WM5,
-    V1 | V2 | V3 | V4 | V5,
-    A1 | A2 | A3 | A4 | A5
+    WM1 | WM2 | WM3 | WM4 | WM5
     >,
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-  t4: IType<S4, M4, WM4, V4, A4>,
-  t5: IType<S5, M5, WM5, V5, A5>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+  t4: IType<S4, M4, WM4>,
+  t5: IType<S5, M5, WM5>,
+): OComplexType<
   S1 | S2 | S3 | S4 | S5,
   M1 | M2 | M3 | M4 | M5,
-  WM1 | WM2 | WM3 | WM4 | WM5,
-  V1 | V2 | V3 | V4 | V5,
-  A1 | A2 | A3 | A4 | A5
+  WM1 | WM2 | WM3 | WM4 | WM5
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3,
-  S4, M4, WM4, V4, A4,
-  S5, M5, WM5, V5, A5,
-  S6, M6, WM6, V6, A6
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3,
+  S4, M4, WM4,
+  S5, M5, WM5,
+  S6, M6, WM6
   >(
   dispatch: (sn: S1 | S2 | S3 | S4 | S5 | S6) => IType<
     S1 | S2 | S3 | S4 | S5 | S6,
     M1 | M2 | M3 | M4 | M5 | M6,
-    WM1 | WM2 | WM3 | WM4 | WM5 | WM6,
-    V1 | V2 | V3 | V4 | V5 | V6,
-    A1 | A2 | A3 | A4 | A5 | A6
+    WM1 | WM2 | WM3 | WM4 | WM5 | WM6
     >,
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-  t4: IType<S4, M4, WM4, V4, A4>,
-  t5: IType<S5, M5, WM5, V5, A5>,
-  t6: IType<S6, M6, WM6, V6, A6>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+  t4: IType<S4, M4, WM4>,
+  t5: IType<S5, M5, WM5>,
+  t6: IType<S6, M6, WM6>,
+): OComplexType<
   S1 | S2 | S3 | S4 | S5 | S6,
   M1 | M2 | M3 | M4 | M5 | M6,
-  WM1 | WM2 | WM3 | WM4 | WM5 | WM6,
-  V1 | V2 | V3 | V4 | V5 | V6,
-  A1 | A2 | A3 | A4 | A5 | A6
+  WM1 | WM2 | WM3 | WM4 | WM5 | WM6
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3,
-  S4, M4, WM4, V4, A4,
-  S5, M5, WM5, V5, A5,
-  S6, M6, WM6, V6, A6,
-  S7, M7, WM7, V7, A7
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3,
+  S4, M4, WM4,
+  S5, M5, WM5,
+  S6, M6, WM6,
+  S7, M7, WM7
   >(
   dispatch: (sn: S1 | S2 | S3 | S4 | S5 | S6 | S7) => IType<
     S1 | S2 | S3 | S4 | S5 | S6 | S7,
     M1 | M2 | M3 | M4 | M5 | M6 | M7,
-    WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7,
-    V1 | V2 | V3 | V4 | V5 | V6 | V7,
-    A1 | A2 | A3 | A4 | A5 | A6 | A7
+    WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7
     >,
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-  t4: IType<S4, M4, WM4, V4, A4>,
-  t5: IType<S5, M5, WM5, V5, A5>,
-  t6: IType<S6, M6, WM6, V6, A6>,
-  t7: IType<S7, M7, WM7, V7, A7>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+  t4: IType<S4, M4, WM4>,
+  t5: IType<S5, M5, WM5>,
+  t6: IType<S6, M6, WM6>,
+  t7: IType<S7, M7, WM7>,
+): OComplexType<
   S1 | S2 | S3 | S4 | S5 | S6 | S7,
   M1 | M2 | M3 | M4 | M5 | M6 | M7,
-  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7,
-  V1 | V2 | V3 | V4 | V5 | V6 | V7,
-  A1 | A2 | A3 | A4 | A5 | A6 | A7
+  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3,
-  S4, M4, WM4, V4, A4,
-  S5, M5, WM5, V5, A5,
-  S6, M6, WM6, V6, A6,
-  S7, M7, WM7, V7, A7,
-  S8, M8, WM8, V8, A8
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3,
+  S4, M4, WM4,
+  S5, M5, WM5,
+  S6, M6, WM6,
+  S7, M7, WM7,
+  S8, M8, WM8
   >(
   dispatch: (sn: S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8) => IType<
     S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8,
     M1 | M2 | M3 | M4 | M5 | M6 | M7 | M8,
-    WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8,
-    V1 | V2 | V3 | V4 | V5 | V6 | V7 | V8,
-    A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8
+    WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8
     >,
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-  t4: IType<S4, M4, WM4, V4, A4>,
-  t5: IType<S5, M5, WM5, V5, A5>,
-  t6: IType<S6, M6, WM6, V6, A6>,
-  t7: IType<S7, M7, WM7, V7, A7>,
-  t8: IType<S8, M8, WM8, V8, A8>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+  t4: IType<S4, M4, WM4>,
+  t5: IType<S5, M5, WM5>,
+  t6: IType<S6, M6, WM6>,
+  t7: IType<S7, M7, WM7>,
+  t8: IType<S8, M8, WM8>,
+): OComplexType<
   S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8,
   M1 | M2 | M3 | M4 | M5 | M6 | M7 | M8,
-  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8,
-  V1 | V2 | V3 | V4 | V5 | V6 | V7 | V8,
-  A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8
+  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3,
-  S4, M4, WM4, V4, A4,
-  S5, M5, WM5, V5, A5,
-  S6, M6, WM6, V6, A6,
-  S7, M7, WM7, V7, A7,
-  S8, M8, WM8, V8, A8,
-  S9, M9, WM9, V9, A9
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3,
+  S4, M4, WM4,
+  S5, M5, WM5,
+  S6, M6, WM6,
+  S7, M7, WM7,
+  S8, M8, WM8,
+  S9, M9, WM9
   >(
   dispatch: (sn: S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9) => IType<
     S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9,
     M1 | M2 | M3 | M4 | M5 | M6 | M7 | M8 | M9,
-    WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8 | WM9,
-    V1 | V2 | V3 | V4 | V5 | V6 | V7 | V8 | V9,
-    A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8 | A9
+    WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8 | WM9
     >,
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-  t4: IType<S4, M4, WM4, V4, A4>,
-  t5: IType<S5, M5, WM5, V5, A5>,
-  t6: IType<S6, M6, WM6, V6, A6>,
-  t7: IType<S7, M7, WM7, V7, A7>,
-  t8: IType<S8, M8, WM8, V8, A8>,
-  t9: IType<S9, M9, WM9, V9, A9>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+  t4: IType<S4, M4, WM4>,
+  t5: IType<S5, M5, WM5>,
+  t6: IType<S6, M6, WM6>,
+  t7: IType<S7, M7, WM7>,
+  t8: IType<S8, M8, WM8>,
+  t9: IType<S9, M9, WM9>,
+): OComplexType<
   S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9,
   M1 | M2 | M3 | M4 | M5 | M6 | M7 | M8 | M9,
-  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8 | WM9,
-  V1 | V2 | V3 | V4 | V5 | V6 | V7 | V8 | V9,
-  A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8 | A9
+  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8 | WM9
   >;
 
 export function union<
-  S1, M1, WM1, V1, A1,
-  S2, M2, WM2, V2, A2,
-  S3, M3, WM3, V3, A3,
-  S4, M4, WM4, V4, A4,
-  S5, M5, WM5, V5, A5,
-  S6, M6, WM6, V6, A6,
-  S7, M7, WM7, V7, A7,
-  S8, M8, WM8, V8, A8,
-  S9, M9, WM9, V9, A9,
-  S10, M10, WM10, V10, A10
+  S1, M1, WM1,
+  S2, M2, WM2,
+  S3, M3, WM3,
+  S4, M4, WM4,
+  S5, M5, WM5,
+  S6, M6, WM6,
+  S7, M7, WM7,
+  S8, M8, WM8,
+  S9, M9, WM9,
+  S10, M10, WM10
   >(
   dispatch: (sn: S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9 | S10) => IType<
     S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9 | S10,
     M1 | M2 | M3 | M4 | M5 | M6 | M7 | M8 | M9 | M10,
-    WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8 | WM9 | WM10,
-    V1 | V2 | V3 | V4 | V5 | V6 | V7 | V8 | V9 | V10,
-    A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8 | A9 | A10
+    WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8 | WM9 | WM10
     >,
-  t1: IType<S1, M1, WM1, V1, A1>,
-  t2: IType<S2, M2, WM2, V2, A2>,
-  t3: IType<S3, M3, WM3, V3, A3>,
-  t4: IType<S4, M4, WM4, V4, A4>,
-  t5: IType<S5, M5, WM5, V5, A5>,
-  t6: IType<S6, M6, WM6, V6, A6>,
-  t7: IType<S7, M7, WM7, V7, A7>,
-  t8: IType<S8, M8, WM8, V8, A8>,
-  t9: IType<S9, M9, WM9, V9, A9>,
-  t10: IType<S10, M10, WM10, V10, A10>,
-): IComplexType<
+  t1: IType<S1, M1, WM1>,
+  t2: IType<S2, M2, WM2>,
+  t3: IType<S3, M3, WM3>,
+  t4: IType<S4, M4, WM4>,
+  t5: IType<S5, M5, WM5>,
+  t6: IType<S6, M6, WM6>,
+  t7: IType<S7, M7, WM7>,
+  t8: IType<S8, M8, WM8>,
+  t9: IType<S9, M9, WM9>,
+  t10: IType<S10, M10, WM10>
+): OComplexType<
   S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9 | S10,
   M1 | M2 | M3 | M4 | M5 | M6 | M7 | M8 | M9 | M10,
-  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8 | WM9 | WM10,
-  V1 | V2 | V3 | V4 | V5 | V6 | V7 | V8 | V9 | V10,
-  A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8 | A9 | A10
+  WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8 | WM9 | WM10
   >;
 
 
 // base
-export function union<S, M, WM, V, A>(...args: any[]): IType<S, M, WM, V, A> {
+export function union<S, M, WM>(...args: any[]): OComplexType<S, M, WM> {
   return mbst.types.union(...args) as any;
 }

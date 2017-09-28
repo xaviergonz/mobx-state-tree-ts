@@ -1,18 +1,18 @@
 import * as mbst from 'mobx-state-tree';
-import { IComplexType, IModelType, IType } from '../';
+import { OComplexType, OModelType, OType } from '../';
 
 // without name
-export function late<S, M, WM, V, A>(type: () => IModelType<S, M, WM, V, A>): IModelType<S, M, WM, V, A>;
-export function late<S, M, WM, V, A>(type: () => IComplexType<S, M, WM, V, A>): IComplexType<S, M, WM, V, A>;
-export function late<S, M, WM, V, A>(type: () => IType<S, M, WM, V, A>): IType<S, M, WM, V, A>;
+export function late<S, M, WM>(type: () => OModelType<S, M, WM>): OModelType<S, M, WM>;
+export function late<S, M, WM>(type: () => OComplexType<S, M, WM>): OComplexType<S, M, WM>;
+export function late<S, M, WM>(type: () => OType<S, M, WM>): OType<S, M, WM>;
 
 // with name
-export function late<S, M, WM, V, A>(name: string, type: () => IModelType<S, M, WM, V, A>): IModelType<S, M, WM, V, A>;
-export function late<S, M, WM, V, A>(name: string, type: () => IComplexType<S, M, WM, V, A>): IComplexType<S, M, WM, V, A>;
-export function late<S, M, WM, V, A>(name: string, type: () => IType<S, M, WM, V, A>): IType<S, M, WM, V, A>;
+export function late<S, M, WM>(name: string, type: () => OModelType<S, M, WM>): OModelType<S, M, WM>;
+export function late<S, M, WM>(name: string, type: () => OComplexType<S, M, WM>): OComplexType<S, M, WM>;
+export function late<S, M, WM>(name: string, type: () => OType<S, M, WM>): OType<S, M, WM>;
 
 // base
-export function late<S, M, WM, V, A>(...args: any[]): IType<S, M, WM, V, A> {
+export function late<S, M, WM>(...args: any[]): OType<S, M, WM> {
   if (typeof args[0] === 'string') {
     const name = args[0];
     const type = args[1];

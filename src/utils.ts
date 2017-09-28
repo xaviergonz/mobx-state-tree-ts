@@ -1,5 +1,7 @@
 import { IArrayChange, IArraySplice, IKeyValueMap, IListenable, IMapEntries, IMapEntry, IObservableArray, Lambda } from 'mobx';
 
+// tslint:disable:interface-over-type-literal
+
 export type DeepReadonly<T> = {
   readonly [P in keyof T]: DeepReadonly<T[P]>;
   };

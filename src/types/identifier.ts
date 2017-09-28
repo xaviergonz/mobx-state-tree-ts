@@ -1,6 +1,6 @@
 import * as mbst from 'mobx-state-tree';
 import { ISimpleType } from '../interfaces';
-import { types } from './';
+import types from './';
 
 // an identifier can only be of a string or a number. if there's no type then string is assumed
 export function identifier(subType?: typeof types.string): typeof types.string;

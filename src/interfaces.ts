@@ -7,101 +7,91 @@ import { DeepReadonly, SinglePropertyObject } from './utils';
 // S = Snapshot,
 // M = Model (readonly),
 // WM = Model (writeable, for actions/unprotected),
-// V = Views (readonly),
-// A = Actions (readonly),
 
-export type IProtectedStateTreeNode<S, M, WM, V, A> = M & V & A & mbst.IStateTreeNode;
-export type IUnprotectedStateTreeNode<S, M, WM, V, A> = WM & V & A & mbst.IStateTreeNode;
+export type STag = { readonly $_snapshot?: true };
+export type MTag = { readonly $_model?: true };
+export type WMTag = { readonly $_writeModel?: true };
+
+export type IProtectedStateTreeNode<S extends STag, M extends MTag, WM extends WMTag> = M & MTag & mbst.IStateTreeNode & { readonly $_protected?: true };
+export type IUnprotectedStateTreeNode<S extends STag, M extends MTag, WM extends WMTag> = WM & WMTag & mbst.IStateTreeNode & { readonly $_unprotected?: true };
 
 // only use these type as input, never as output
-export type IStateTreeNode<S, M, WM, V, A> = IProtectedStateTreeNode<S, M, WM, V, A> | IUnprotectedStateTreeNode<S, M, WM, V, A>;
+export type IStateTreeNode<S extends STag, M extends MTag, WM extends WMTag> = IUnprotectedStateTreeNode<S, M, WM> | IProtectedStateTreeNode<S, M, WM>;
 
-export type IType<S, M, WM, V, A> = {
+export type IType<S extends STag, M extends MTag, WM extends WMTag> = {
   // types
-  SnapshotType: S;
-  ModelType: M;
-  WriteableModelType: WM;
-  ViewsType: V;
-  ActionsType: A;
-  Type: IType<S, M, WM, V, A>;
+  ModelType: OType<S, M, WM>;
+  SnapshotType: S & STag;
 
   // TODO: simple types cannot be snapshotted
-  Node: IProtectedStateTreeNode<S, M, WM, V, A>;
-  WriteableNode: IUnprotectedStateTreeNode<S, M, WM, V, A>;
+  ReadonlyNodeType: IProtectedStateTreeNode<S, M, WM>;
+  WriteNodeType: IUnprotectedStateTreeNode<S, M, WM>;
 
   readonly name: string;
-  create(snapshot?: S, environment?: any): IProtectedStateTreeNode<S, M, WM, V, A>;
+  create(snapshot?: S, environment?: any): IProtectedStateTreeNode<S & STag, M & MTag, WM & WMTag>;
 };
 
 export type ISimpleType<T> = IType<
-  T, // S
-  DeepReadonly<T>, // M
-  T, // WM
-  {}, // V
-  {} // A
+  T & STag, // S
+  DeepReadonly<T> & MTag, // M
+  T & WMTag // WM
   >;
 
-export type IComplexType<S, M, WM, V, A> = IType<S, M, WM, V, A> & {
+export type IComplexType<S extends STag, M extends MTag, WM extends WMTag> = IType<S & STag, M & MTag, WM & WMTag> & {
   // TODO: complex types can be snapshoted
-  Node: IProtectedStateTreeNode<S, M, WM, V, A>;
-  WriteableNode: IUnprotectedStateTreeNode<S, M, WM, V, A>;
+  ReadonlyNodeType: IProtectedStateTreeNode<S, M, WM>;
+  WriteNodeType: IUnprotectedStateTreeNode<S, M, WM>;
 
-  create(snapshot?: S, environment?: any): IProtectedStateTreeNode<S, M, WM, V, A>;
+  create(snapshot?: S & STag, environment?: any): IProtectedStateTreeNode<S, M, WM>;
 };
 
-export type IModelType<S, M, WM, V, A> /* extends mbst.IModelType<S, WM & V & A> */ = IComplexType<S, M, WM, V, A> & {
-  named(newName: string): IModelType<S, M, WM, V, A>;
+export type IModelType<S extends STag, M extends MTag, WM extends WMTag> /* extends mbst.IModelType<S, WM> */ = IComplexType<S & STag, M & MTag, WM & WMTag> & {
+  named(newName: string): OModelType<S, M, WM>;
 
   // no props, use prop, optProp or maybeProp instead
 
   // needs implementation
-  prop<TPropName extends string, S1, M1, WM1, V1, A1>(pname: TPropName, type: IType<S1, M1, WM1, V1, A1>):
-    IModelType<
+  prop<TPropName extends string, S1, M1, WM1>(pname: TPropName, type: IType<S1, M1, WM1>):
+    OModelType<
       S & SinglePropertyObject<TPropName, S1>,
-      M & Readonly<SinglePropertyObject<TPropName, M1>>, // do not use DeepReadonly
-      WM & SinglePropertyObject<TPropName, WM1>,
-      V & SinglePropertyObject<TPropName, V1>,
-      A & SinglePropertyObject<TPropName, A1>
+      M & Readonly<SinglePropertyObject<TPropName, IProtectedStateTreeNode<S1, M1, WM1>>>, // do not use DeepReadonly
+      WM & SinglePropertyObject<TPropName, IUnprotectedStateTreeNode<S1, M1, WM1>>
       >;
 
   // needs implementation
-  optProp<TPropName extends string, S1, M1, WM1, V1, A1>(pname: TPropName, type: IType<S1, M1, WM1, V1, A1>, defValue: S1 | (() => S1)):
-    IModelType<
+  optProp<TPropName extends string, S1, M1, WM1>(pname: TPropName, type: IType<S1, M1, WM1>, defValue: S1 | (() => S1)):
+    OModelType<
       S & Partial<SinglePropertyObject<TPropName, S1>>,
-      M & Readonly<SinglePropertyObject<TPropName, M1>>, // do not use DeepReadonly
-      WM & SinglePropertyObject<TPropName, WM1>,
-      V & SinglePropertyObject<TPropName, V1>,
-      A & SinglePropertyObject<TPropName, A1>
+      M & Readonly<SinglePropertyObject<TPropName, IProtectedStateTreeNode<S1, M1, WM1>>>, // do not use DeepReadonly
+      WM & SinglePropertyObject<TPropName, IUnprotectedStateTreeNode<S1, M1, WM1>>
       >;
 
   // needs implementation
-  maybeProp<TPropName extends string, S1, M1, WM1, V1, A1>(pname: TPropName, type: IType<S1, M1, WM1, V1, A1>):
-    IModelType<
+  maybeProp<TPropName extends string, S1, M1, WM1>(pname: TPropName, type: IType<S1, M1, WM1>):
+    OModelType<
       S & Partial<SinglePropertyObject<TPropName, S1 | null>>,
-      M & Readonly<SinglePropertyObject<TPropName, M1 | null>>, // do not use DeepReadonly
-      WM & SinglePropertyObject<TPropName, WM1 | null>,
-      V & SinglePropertyObject<TPropName, V1>,
-      A & SinglePropertyObject<TPropName, A1>
+      M & Readonly<SinglePropertyObject<TPropName, IProtectedStateTreeNode<S1, M1, WM1> | null>>, // do not use DeepReadonly
+      WM & SinglePropertyObject<TPropName, IUnprotectedStateTreeNode<S1, M1, WM1> | null>
       >;
 
-  preProcessSnapshot(fn: (snapshot: S) => S): IModelType<S, M, WM, V, A>;
+  preProcessSnapshot(fn: (snapshot: S) => S & STag): OModelType<S, M, WM>;
 
-  views<ExtraV extends object>(f: (self: IProtectedStateTreeNode<S, M, WM, V, A>) => ExtraV):
-    IModelType<
+  views<ExtraV extends object>(f: (self: IProtectedStateTreeNode<S, M, WM>) => ExtraV):
+    OModelType<
       S,
-      M,
-      WM,
-      V & ExtraV,
-      A
+      M & ExtraV,
+      WM & ExtraV
       >;
 
   // tslint:disable-next-line:ban-types
-  actions<ExtraA extends { [name: string]: Function }>(f: (self: IUnprotectedStateTreeNode<S, M, WM, V, A>) => ExtraA):
-    IModelType<
+  actions<ExtraA extends { [name: string]: Function }>(f: (self: IUnprotectedStateTreeNode<S, M, WM>) => ExtraA):
+    OModelType<
       S,
-      M,
-      WM,
-      V,
-      A & ExtraA
+      M & ExtraA,
+      WM & ExtraA
       >;
 };
+
+export type OType<S, M, WM> = IType<S & STag, M & MTag, WM & WMTag>;
+export type OComplexType<S, M, WM> = IComplexType<S & STag, M & MTag, WM & WMTag>;
+export type OModelType<S, M, WM> = IModelType<S & STag, M & MTag, WM & WMTag>;

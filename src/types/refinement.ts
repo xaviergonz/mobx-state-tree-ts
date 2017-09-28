@@ -1,22 +1,22 @@
 import * as mbst from 'mobx-state-tree';
-import { IComplexType, IModelType } from '../';
+import { IComplexType, IModelType, OComplexType, OModelType, OType } from '../';
 import { IType } from '../interfaces';
 
-type MessageType = string | ((v: any) => string);
-type PredicateType<S> = (sn: S) => boolean;
+export type RefinementMessageType = string | ((v: any) => string);
+export type RefinementPredicateType<S> = (sn: S) => boolean;
 
 // without name
-export function refinement<S, M, WM, V, A>(t1: IModelType<S, M, WM, V, A>, predicate: PredicateType<S>, message?: MessageType): IModelType<S, M, WM, V, A>;
-export function refinement<S, M, WM, V, A>(t1: IComplexType<S, M, WM, V, A>, predicate: PredicateType<S>, message?: MessageType): IComplexType<S, M, WM, V, A>;
-export function refinement<S, M, WM, V, A>(t1: IType<S, M, WM, V, A>, predicate: PredicateType<S>, message?: MessageType): IType<S, M, WM, V, A>;
+export function refinement<S, M, WM>(t1: IModelType<S, M, WM>, predicate: RefinementPredicateType<S>, message?: RefinementMessageType): OModelType<S, M, WM>;
+export function refinement<S, M, WM>(t1: IComplexType<S, M, WM>, predicate: RefinementPredicateType<S>, message?: RefinementMessageType): OComplexType<S, M, WM>;
+export function refinement<S, M, WM>(t1: IType<S, M, WM>, predicate: RefinementPredicateType<S>, message?: RefinementMessageType): OType<S, M, WM>;
 
 // with name
-export function refinement<S, M, WM, V, A>(name: string, t1: IModelType<S, M, WM, V, A>, predicate: PredicateType<S>, message?: MessageType): IModelType<S, M, WM, V, A>;
-export function refinement<S, M, WM, V, A>(name: string, t1: IComplexType<S, M, WM, V, A>, predicate: PredicateType<S>, message?: MessageType): IComplexType<S, M, WM, V, A>;
-export function refinement<S, M, WM, V, A>(name: string, t1: IType<S, M, WM, V, A>, predicate: PredicateType<S>, message?: MessageType): IType<S, M, WM, V, A>;
+export function refinement<S, M, WM>(name: string, t1: IModelType<S, M, WM>, predicate: RefinementPredicateType<S>, message?: RefinementMessageType): OModelType<S, M, M>;
+export function refinement<S, M, WM>(name: string, t1: IComplexType<S, M, WM>, predicate: RefinementPredicateType<S>, message?: RefinementMessageType): OComplexType<S, M, M>;
+export function refinement<S, M, WM>(name: string, t1: IType<S, M, WM>, predicate: RefinementPredicateType<S>, message?: RefinementMessageType): OType<S, M, M>;
 
 // base
-export function refinement<S, M, WM, V, A>(...args: any[]): IType<S, M, WM, V, A> {
+export function refinement<S, M, WM>(...args: any[]): OType<S, M, M> {
   const newArgs = args.filter((a) => a !== undefined); // skip undefined args
   return (mbst.types.refinement as any)(...newArgs);
 }
