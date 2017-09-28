@@ -4,7 +4,7 @@
   "description": "A better typescript wrapper over mobx-state-tree",
   "main": "dist/index.js",
   "scripts": {
-    "test": "npm run build && node dist/test.js",
+    "test": "npm run build && node dist/tests/test.js",
     "clean": "rimraf dist",
     "build": "npm run clean && tsc -p ."
   },

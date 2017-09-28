@@ -5,8 +5,8 @@ import { DeepReadonly, SinglePropertyObject } from './utils';
 // tslint:disable:no-empty-interface
 
 // S = Snapshot,
-// M = Model (readonly),
-// WM = Model (writeable, for actions/unprotected),
+// M = Model (readonly, protected mode),
+// WM = Model (writeable, for actions/unprotected mode),
 
 export type STag = { readonly $_snapshot?: true };
 export type MTag = { readonly $_model?: true };
@@ -20,10 +20,10 @@ export type IStateTreeNode<S extends STag, M extends MTag, WM extends WMTag> = I
 
 export type IType<S extends STag, M extends MTag, WM extends WMTag> = {
   // types
-  ModelType: OType<S, M, WM>;
+  ModelType: IOutType<S, M, WM>;
   SnapshotType: S & STag;
 
-  // TODO: simple types cannot be snapshotted
+  // TODO: simple types cannot be snap-shotted
   ReadonlyNodeType: IProtectedStateTreeNode<S, M, WM>;
   WriteNodeType: IUnprotectedStateTreeNode<S, M, WM>;
 
@@ -38,7 +38,7 @@ export type ISimpleType<T> = IType<
   >;
 
 export type IComplexType<S extends STag, M extends MTag, WM extends WMTag> = IType<S & STag, M & MTag, WM & WMTag> & {
-  // TODO: complex types can be snapshoted
+  // TODO: complex types can be snap-shotted
   ReadonlyNodeType: IProtectedStateTreeNode<S, M, WM>;
   WriteNodeType: IUnprotectedStateTreeNode<S, M, WM>;
 
@@ -46,13 +46,13 @@ export type IComplexType<S extends STag, M extends MTag, WM extends WMTag> = ITy
 };
 
 export type IModelType<S extends STag, M extends MTag, WM extends WMTag> /* extends mbst.IModelType<S, WM> */ = IComplexType<S & STag, M & MTag, WM & WMTag> & {
-  named(newName: string): OModelType<S, M, WM>;
+  named(newName: string): IOutModelType<S, M, WM>;
 
   // no props, use prop, optProp or maybeProp instead
 
   // needs implementation
   prop<TPropName extends string, S1, M1, WM1>(pname: TPropName, type: IType<S1, M1, WM1>):
-    OModelType<
+    IOutModelType<
       S & SinglePropertyObject<TPropName, S1>,
       M & Readonly<SinglePropertyObject<TPropName, IProtectedStateTreeNode<S1, M1, WM1>>>, // do not use DeepReadonly
       WM & SinglePropertyObject<TPropName, IUnprotectedStateTreeNode<S1, M1, WM1>>
@@ -60,7 +60,7 @@ export type IModelType<S extends STag, M extends MTag, WM extends WMTag> /* exte
 
   // needs implementation
   optProp<TPropName extends string, S1, M1, WM1>(pname: TPropName, type: IType<S1, M1, WM1>, defValue: S1 | (() => S1)):
-    OModelType<
+    IOutModelType<
       S & Partial<SinglePropertyObject<TPropName, S1>>,
       M & Readonly<SinglePropertyObject<TPropName, IProtectedStateTreeNode<S1, M1, WM1>>>, // do not use DeepReadonly
       WM & SinglePropertyObject<TPropName, IUnprotectedStateTreeNode<S1, M1, WM1>>
@@ -68,16 +68,16 @@ export type IModelType<S extends STag, M extends MTag, WM extends WMTag> /* exte
 
   // needs implementation
   maybeProp<TPropName extends string, S1, M1, WM1>(pname: TPropName, type: IType<S1, M1, WM1>):
-    OModelType<
+    IOutModelType<
       S & Partial<SinglePropertyObject<TPropName, S1 | null>>,
       M & Readonly<SinglePropertyObject<TPropName, IProtectedStateTreeNode<S1, M1, WM1> | null>>, // do not use DeepReadonly
       WM & SinglePropertyObject<TPropName, IUnprotectedStateTreeNode<S1, M1, WM1> | null>
       >;
 
-  preProcessSnapshot(fn: (snapshot: S) => S & STag): OModelType<S, M, WM>;
+  preProcessSnapshot(fn: (snapshot: S) => S & STag): IOutModelType<S, M, WM>;
 
   views<ExtraV extends object>(f: (self: IProtectedStateTreeNode<S, M, WM>) => ExtraV):
-    OModelType<
+    IOutModelType<
       S,
       M & ExtraV,
       WM & ExtraV
@@ -85,13 +85,13 @@ export type IModelType<S extends STag, M extends MTag, WM extends WMTag> /* exte
 
   // tslint:disable-next-line:ban-types
   actions<ExtraA extends { [name: string]: Function }>(f: (self: IUnprotectedStateTreeNode<S, M, WM>) => ExtraA):
-    OModelType<
+    IOutModelType<
       S,
       M & ExtraA,
       WM & ExtraA
       >;
 };
 
-export type OType<S, M, WM> = IType<S & STag, M & MTag, WM & WMTag>;
-export type OComplexType<S, M, WM> = IComplexType<S & STag, M & MTag, WM & WMTag>;
-export type OModelType<S, M, WM> = IModelType<S & STag, M & MTag, WM & WMTag>;
+export type IOutType<S, M, WM> = IType<S & STag, M & MTag, WM & WMTag>;
+export type IOutComplexType<S, M, WM> = IComplexType<S & STag, M & MTag, WM & WMTag>;
+export type IOutModelType<S, M, WM> = IModelType<S & STag, M & MTag, WM & WMTag>;

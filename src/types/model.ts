@@ -1,7 +1,7 @@
 import * as mbst from 'mobx-state-tree';
-import { OModelType } from '../';
+import { IOutModelType } from '../';
 
-export function model(name?: string): OModelType<
+export function model(name?: string): IOutModelType<
   {}, // S
   Readonly<{}>, // M
   {} // WM
