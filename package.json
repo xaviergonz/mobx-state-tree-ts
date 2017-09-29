@@ -6,6 +6,7 @@
     "dist/**/*"
   ],
   "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "test": "npm run clean:tests && npm run build:tests && node tests-dist/tests/test.js",
 

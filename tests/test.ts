@@ -21,7 +21,7 @@ const m = types.model()
   .prop('x', types.number)
   .optProp('y', types.number, 0)
   .prop('subModel1', subModel)
-  .optProp('subModel2', types.immutable(subModel), { id: '0', subX: 5})
+  .optProp('subModel2', subModel, { id: '0', subX: 5})
   .prop('subModelRef', types.reference(subModel))
   .optProp('color', color, 'green')
   .maybeProp('color2', color)
@@ -41,7 +41,6 @@ const m = types.model()
       self.x = self.xSquared;
       self.subModel1.subX = 5;
       self.subModel1.setSubY(4); // good, we can access sub actions from actions
-      // self.subModel2.subX = 5; // since this other submodel is immutable this gives a compiler error, good!
     },
   }))
   .prop('a', positiveNumber)
@@ -92,7 +91,7 @@ unprotectedNode.subModel1 = subModel.create({ // good, we can assign a node
 unprotectedNode.subModel1 = { // kinda MEH, we can assign a snapshot but we need to typecast it to the writeable node type
   id: '1',
   subX: 7
-} as typeof subModel.WriteNodeType;
+} as typeof subModel.UnprotectedType;
 const aaa: string | number = unprotectedNode.subModel1.subY;
 const colorStr: string | null = unprotectedNode.color2;
 unprotectedNode.color2 = 'red';
@@ -205,13 +204,13 @@ unprotectedStore.books[0] = Book.create({
   title: 'some title',
   price: 4,
   date: 1234
-}) as typeof Book.WriteNodeType; // not ok, shame this is needed when the model is unprotected
+}) as typeof Book.UnprotectedType; // not ok, shame this is needed when the model is unprotected
 
 unprotectedStore.booksMap.set('111', {
   title: 'title set on setter',
   price: 24.95,
   date: 1234,
-} as typeof Book.WriteNodeType);
+} as typeof Book.UnprotectedType);
 unprotectedStore.booksMap.get('111')!.title = 'title set on getter';
 console.log('MAP TEST 2', getSnapshot(unprotectedStore));
 
@@ -223,7 +222,7 @@ const m1m2node = theunion.create({
   x: 2,
 });
 console.log(getSnapshot(m1m2node));
-const subModel111 = resolvePath<typeof subModel.ReadonlyNodeType>(node, '/subModel1');
+const subModel111 = resolvePath<typeof subModel.ProtectedType>(node, '/subModel1');
 if (subModel111) {
   console.log(subModel111.subY);
 }

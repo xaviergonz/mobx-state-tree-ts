@@ -9,7 +9,6 @@ import * as compose from './compose';
 import * as enumeration from './enumeration';
 import * as frozen from './frozen';
 import * as identifier from './identifier';
-import * as immutable from './immutable';
 import * as late from './late';
 import * as literal from './literal';
 import * as map from './map';
@@ -26,7 +25,6 @@ export default {
   frozen: frozen.frozen,
   identifier: identifier.identifier,
   late: late.late,
-  immutable: immutable.immutable,
   literal: literal.literal,
   map: map.map,
   model: model.model,

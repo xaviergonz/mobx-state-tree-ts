@@ -18,10 +18,10 @@ export type IType<S, M, WM> = {
   // types
   SnapshotType: S;
 
-  // TODO: simple types cannot be snap-shotted
+  // TODO: node instances of simple types cannot be snap-shotted
   Type: IProtectedStateTreeNode<S, M, WM>;
-  ReadonlyNodeType: IProtectedStateTreeNode<S, M, WM>;
-  WriteNodeType: IUnprotectedStateTreeNode<S, M, WM>;
+  ProtectedType: IProtectedStateTreeNode<S, M, WM>;
+  UnprotectedType: IUnprotectedStateTreeNode<S, M, WM>;
 
   readonly name: string;
   create(snapshot?: S, environment?: any): IProtectedStateTreeNode<S, M, WM>;
@@ -34,10 +34,7 @@ export type ISimpleType<T> = IType<
   >;
 
 export type IComplexType<S, M, WM> = IType<S , M , WM > & {
-  // TODO: complex types can be snap-shotted
-  Type: IProtectedStateTreeNode<S, M, WM>;
-  ReadonlyNodeType: IProtectedStateTreeNode<S, M, WM>;
-  WriteNodeType: IUnprotectedStateTreeNode<S, M, WM>;
+  // TODO: node instances of complex types can be snap-shotted
 
   create(snapshot?: S , environment?: any): IProtectedStateTreeNode<S, M, WM>;
 };
