@@ -1,5 +1,5 @@
 # mobx-state-tree-ts
-###### A better typescript wrapper over mobx-state-tree.
+###### Better typescript type definitions for mobx-state-tree
 
 The only difference with the public API of mobx-state-tree is how models are created.
 

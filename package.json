@@ -1,8 +1,11 @@
 {
   "name": "mobx-state-tree-ts",
   "version": "0.12.0",
-  "description": "A better typescript wrapper over mobx-state-tree",
+  "description": "Better typescript type definitions for mobx-state-tree",
   "main": "dist/index.js",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "test": "npm run build && node dist/tests/test.js",
     "clean": "rimraf dist",

@@ -29,7 +29,7 @@ const m = types.model()
   .views((self) => ({
       get xSquared() {
         // self.x = 20; // views cannot do model changes, good!
-        // self.subModel1.setSubY(4); // good, we cannot access subactions from views
+        // self.subModel1.setSubY(4); // kinda meh, we can access subactions from views
         return self.x * self.x;
       },
       get ySquared() {
@@ -49,7 +49,7 @@ const m = types.model()
   .optProp('b', types.number, 5)
   .views((self) => ({
       get aSquared() {
-        // self.setXSquared(); // actions are not available to views, good!
+        // self.setXSquared(); // kinda meh, actions are available to views
         return self.a * self.a;
       }
     })
@@ -68,7 +68,6 @@ const mrefinement = types.refinement('model with x >= 4', m, (m2) => m2.x >= 4);
 const node = m.create({
   id2: 5,
   x: 1,
-  // a: -6, // OK: it throws due to refinement
   a: 6,
   subModel1: {
     id: '1',
@@ -91,7 +90,7 @@ unprotectedNode.subModel1 = subModel.create({ // good, we can assign a node
   id: '1',
   subX: 8,
 });
-unprotectedNode.subModel1 = { // kinda MEH, we can assign a snapshot but we need to typecast it to the model type
+unprotectedNode.subModel1 = { // kinda MEH, we can assign a snapshot but we need to typecast it to the writeable node type
   id: '1',
   subX: 7
 } as typeof subModel.WriteNodeType;
@@ -135,43 +134,6 @@ const nodeSnapshot2: typeof m.SnapshotType = {
   subModelRef: '100',
 };
 nodeSnapshot2.x = 20;
-/*
-const modelOnly: typeof m.ModelType = {
-  id2: 200,
-  x: 10,
-  y: 20,
-  a: 30,
-  b: 40,
-  color: 'red', // good, works!
-  // color: 'r', // good, this is not allowed
-  color2: null,
-  subModel1: { // this has to be present, good!
-    id: '100',
-    subX: 5, // this has to be present, good!
-    subY: 4, // this has to be present and a 4 or 'hi' or 'hello', good!
-  },
-  subModel2: { // this has to be present, good!
-    id: '200',
-    subX: 5,  // this has to be present, good!
-    // subY: 'he', // it complains this should be 4, 'hi' or 'hello', good!
-    subY: 'hi', // this has to be present and a 4 or 'hi', good!
-    subZ: 6 // NOT OK: kinda meh, it is not on the submodel and it doesn't complain it shouldn't be
-  },
-  subModelRef: { // the reference in a model has to be the whole model, good!
-    id: '100',
-    subX: 5,
-    subY: 4,
-  }
-};
-// modelOnly.x = 20; // error: cannot write to a model type
-*/
-
-// const brokenModelType: typeof m.ModelType = { // error: y is missing
-//   x: 10,
-//   a: 30,
-//   b: 40,
-// };
-//
 
 const mergedType = types.compose(m, subModel);
 const mergedSnapshot: typeof mergedType.SnapshotType = {
@@ -219,7 +181,6 @@ const store = Store.create({
 
 console.log('MAP TITLE:', store.booksMap.get('111')!.title);
 // store.booksMap.set // good no setter
-
 // store.books[0].title = 'I hate trees!'; // good! not allowed since the node is in protected mode
 
 onAction(store, (act) => console.dir(act));
