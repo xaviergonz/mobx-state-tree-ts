@@ -59,7 +59,6 @@ twoBooks.book1 = {
 ```
 
 As an extra, each model includes the following types:
-* **ModelType:** the type of the model itself
 * **SnapshotType:** the type for the model's snapshot
-* **ReadonlyNodeType:** the type for a readonly (protected) node instance of the model
+* **ReadonlyNodeType:** the type for a readonly (protected) node instance of the model, the same as **Type**
 * **WriteNodeType:** the type for a writeable (unprotected) node instance of the model
