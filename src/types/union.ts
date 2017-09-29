@@ -412,6 +412,13 @@ export function union<
   WM1 | WM2 | WM3 | WM4 | WM5 | WM6 | WM7 | WM8 | WM9 | WM10
   >;
 
+// many of the same kind
+export function union<S, M, WM>(...types: IType<S, M, WM>[]): IComplexType<S, M, WM>;
+export function union<S, M, WM>(dispatch: (sn: S) => IType<S, M, WM>, ...types: IType<S, M, WM>[]): IComplexType<S, M, WM>;
+
+// many of any kind
+export function union<S, M, WM>(...types: IType<any, any, any>[]): IComplexType<S, M, WM>;
+export function union<S, M, WM>(dispatch: (sn: S) => IType<any, any, any>, ...types: IType<any, any, any>[]): IComplexType<S, M, WM>;
 
 // base
 export function union<S, M, WM>(...args: any[]): IComplexType<S, M, WM> {
