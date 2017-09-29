@@ -1,5 +1,4 @@
-import { getSnapshot, protect, types, unprotect } from '../index';
-import { onAction, resolveIdentifier, resolvePath } from '../operations';
+import { getSnapshot, onAction, protect, resolveIdentifier, resolvePath, types, unprotect } from '../src/';
 
 // anything other than 4 or 'hi' or 'hello' is compile error
 const typesHiOr4 = types.union(types.literal(4), types.literal('hi'), types.literal('hello'));

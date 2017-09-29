@@ -2,15 +2,25 @@
   "name": "mobx-state-tree-ts",
   "version": "0.12.0",
   "description": "Better typescript type definitions for mobx-state-tree",
-  "main": "dist/index.js",
   "files": [
     "dist/**/*"
   ],
+  "main": "dist/index.js",
   "scripts": {
-    "test": "npm run build && node dist/tests/test.js",
-    "clean": "rimraf dist",
-    "build": "npm run clean && tsc -p .",
-    "lint": "tslint --project ."
+    "test": "npm run clean:tests && npm run build:tests && node tests-dist/tests/test.js",
+
+    "clean": "npm run clean:lib && npm run clean:tests",
+    "clean:tests": "rimraf tests-dist",
+    "clean:lib": "rimraf dist",
+
+    "clean-build": "npm run clean && npm run build",
+    "build": "npm run build:lib && npm run build:tests",
+    "build:lib": "tsc -p src/.",
+    "build:tests": "tsc -p tests/.",
+
+    "lint": "tslint --project src/. && tslint --project tests/.",
+
+    "prepublish": "npm run lint && npm run clean-build"
   },
   "repository": {
     "type": "git",
