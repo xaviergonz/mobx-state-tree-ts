@@ -1,5 +1,5 @@
 import * as mbst from 'mobx-state-tree';
-import { IProtectedStateTreeNode, IType, IUnprotectedStateTreeNode, IComplexType } from '../';
+import { IComplexType, IProtectedStateTreeNode, IType, IUnprotectedStateTreeNode } from '../';
 import { IReadonlyExtendedObservableMap } from '../utils';
 
 export function map<S, M, WM>(baseType: IType<S, M, WM>): IComplexType<

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "npm run build && node dist/tests/test.js",
     "clean": "rimraf dist",
-    "build": "npm run clean && tsc -p ."
+    "build": "npm run clean && tsc -p .",
+    "lint": "tslint --project ."
   },
   "repository": {
     "type": "git",
