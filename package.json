@@ -23,7 +23,7 @@
     "type": "git",
     "url": "git+https://github.com/xaviergonz/mobx-state-tree-ts.git"
   },
-  "author": "",
+  "author": "Javier Gonzalez Garces <xaviergonz@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/xaviergonz/mobx-state-tree-ts/issues"
