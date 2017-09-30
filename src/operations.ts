@@ -76,8 +76,8 @@ export function applySnapshot<S, M>(target: IStateTreeNode<S, M>, snapshot: S): 
   mbst.applySnapshot(target, snapshot);
 }
 
-// generated snapshots are readonly
-export function getSnapshot<S, M>(target: IStateTreeNode<S, M>): DeepReadonly<S> {
+// generated snapshots are readonly, but we don't use DeepReadonly for compatibility reasons
+export function getSnapshot<S, M>(target: IStateTreeNode<S, M>): S {
   return mbst.getSnapshot(target);
 }
 
