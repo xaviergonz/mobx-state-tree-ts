@@ -17,7 +17,7 @@
     "build:lib": "tsc -p src/.",
     "build:tests": "tsc -p tests/.",
     "lint": "tslint --project src/. && tslint --project tests/.",
-    "prepublish": "npm run lint && npm run clean-build"
+    "prepare": "npm run lint && npm run clean-build"
   },
   "repository": {
     "type": "git",
@@ -32,9 +32,11 @@
   "devDependencies": {
     "rimraf": "^2.6.2",
     "tslint": "^5.7.0",
-    "typescript": "^2.5.3"
+    "typescript": "^2.5.3",
+    "mobx": "^3.3.0",
+    "mobx-state-tree": "^0.12.0"
   },
-  "dependencies": {
+  "peerDependencies": {
     "mobx": "^3.3.0",
     "mobx-state-tree": "^0.12.0"
   }
