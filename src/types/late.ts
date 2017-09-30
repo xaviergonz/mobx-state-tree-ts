@@ -2,17 +2,17 @@ import * as mbst from 'mobx-state-tree';
 import { IComplexType, IModelType, IType } from '../';
 
 // without name
-export function late<S, M, WM>(type: () => IModelType<S, M, WM>): IModelType<S, M, WM>;
-export function late<S, M, WM>(type: () => IComplexType<S, M, WM>): IComplexType<S, M, WM>;
-export function late<S, M, WM>(type: () => IType<S, M, WM>): IType<S, M, WM>;
+export function late<S, M>(type: () => IModelType<S, M>): IModelType<S, M>;
+export function late<S, M>(type: () => IComplexType<S, M>): IComplexType<S, M>;
+export function late<S, M>(type: () => IType<S, M>): IType<S, M>;
 
 // with name
-export function late<S, M, WM>(name: string, type: () => IModelType<S, M, WM>): IModelType<S, M, WM>;
-export function late<S, M, WM>(name: string, type: () => IComplexType<S, M, WM>): IComplexType<S, M, WM>;
-export function late<S, M, WM>(name: string, type: () => IType<S, M, WM>): IType<S, M, WM>;
+export function late<S, M>(name: string, type: () => IModelType<S, M>): IModelType<S, M>;
+export function late<S, M>(name: string, type: () => IComplexType<S, M>): IComplexType<S, M>;
+export function late<S, M>(name: string, type: () => IType<S, M>): IType<S, M>;
 
 // base
-export function late<S, M, WM>(...args: any[]): IType<S, M, WM> {
+export function late<S, M>(...args: any[]): IType<S, M> {
   if (typeof args[0] === 'string') {
     const name = args[0];
     const type = args[1];

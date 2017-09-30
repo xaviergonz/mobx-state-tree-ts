@@ -3,8 +3,7 @@ import { IModelType } from '../';
 
 export function model(name?: string): IModelType<
   {}, // S
-  Readonly<{}>, // M
-  {} // WM
+  {} // M
   > {
   if (name) {
     return mbst.types.model(name, {}) as any;

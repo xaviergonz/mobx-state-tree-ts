@@ -25,12 +25,14 @@ import {
   onPatch,
   onSnapshot,
   process,
+  protect,
   recordActions,
   recordPatches,
   unescapeJsonPath,
+  unprotect,
   walk
 } from 'mobx-state-tree';
-import { IProtectedStateTreeNode, IStateTreeNode, IType, IUnprotectedStateTreeNode } from './interfaces';
+import { IStateTreeNode, IType } from './interfaces';
 import { DeepReadonly } from './utils';
 
 // tslint:disable:interface-over-type-literal
@@ -66,57 +68,49 @@ export {
   recordPatches,
   unescapeJsonPath,
   walk,
+  protect,
+  unprotect
 };
 
-export function applySnapshot<S, M, WM>(target: IStateTreeNode<S, M, WM>, snapshot: S): void {
+export function applySnapshot<S, M, WM>(target: IStateTreeNode<S, M>, snapshot: S): void {
   mbst.applySnapshot(target, snapshot);
 }
 
 // generated snapshots are readonly
-export function getSnapshot<S, M, WM>(target: IStateTreeNode<S, M, WM>): DeepReadonly<S> {
+export function getSnapshot<S, M, WM>(target: IStateTreeNode<S, M>): DeepReadonly<S> {
   return mbst.getSnapshot(target);
 }
 
-export function getType<S, M, WM>(object: IStateTreeNode<S, M, WM>): IType<S, M, WM> {
+export function getType<S, M, WM>(object: IStateTreeNode<S, M>): IType<S, M> {
   return mbst.getType(object) as any;
 }
 
-export function isStateTreeNode<S, M, WM>(object: IStateTreeNode<S, M, WM>): object is IStateTreeNode<S, M, WM> {
+export function isStateTreeNode<S, M, WM>(object: IStateTreeNode<S, M>): object is IStateTreeNode<S, M> {
   return mbst.isStateTreeNode(object);
 }
 
-export function protect<S, M, WM>(target: IStateTreeNode<S, M, WM>): IProtectedStateTreeNode<S, M, WM> {
-  mbst.protect(target);
-  return target as IProtectedStateTreeNode<S, M, WM>;
-}
-
-export function resolveIdentifier<S, M, WM, A, V>(
-  type: IType<S, M, WM>,
-  target: IProtectedStateTreeNode<any, any, any>,
+export function resolveIdentifier<S, M>(
+  type: IType<S, M>,
+  target: IStateTreeNode<any, any>,
   id: string | number
-): IProtectedStateTreeNode<S, M, WM> | undefined;
-export function resolveIdentifier<S, M, WM>(
-  type: IType<S, M, WM>,
-  target: IUnprotectedStateTreeNode<any, any, any>,
+): IStateTreeNode<S, M> | undefined;
+export function resolveIdentifier<S, M>(
+  type: IType<S, M>,
+  target: IStateTreeNode<any, any>,
   id: string | number
-): IUnprotectedStateTreeNode<S, M, WM> | undefined;
-export function resolveIdentifier<S, M, WM>(
-  type: IType<S, M, WM>,
-  target: IStateTreeNode<any, any, any>,
+): IStateTreeNode<S, M> | undefined;
+export function resolveIdentifier<S, M>(
+  type: IType<S, M>,
+  target: IStateTreeNode<any, any>,
   id: string | number
-): IStateTreeNode<S, M, WM> | undefined {
+): IStateTreeNode<S, M> | undefined {
   return mbst.resolveIdentifier(type as any, target, id) as any;
 }
 
-export function resolvePath<T>(target: IStateTreeNode<any, any, any>, path: string): T | undefined {
+export function resolvePath<T>(target: IStateTreeNode<any, any>, path: string): T | undefined {
   return mbst.resolvePath(target, path);
 }
 
-export function tryResolve<T>(target: IStateTreeNode<any, any, any>, path: string): T | undefined {
+export function tryResolve<T>(target: IStateTreeNode<any, any>, path: string): T | undefined {
   return mbst.tryResolve(target, path);
-}
-
-export function unprotect<S, M, WM>(target: IStateTreeNode<S, M, WM>): IUnprotectedStateTreeNode<S, M, WM> {
-  mbst.unprotect(target);
-  return target as IUnprotectedStateTreeNode<S, M, WM>;
 }

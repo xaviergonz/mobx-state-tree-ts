@@ -9,18 +9,14 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "test": "npm run clean:tests && npm run build:tests && node tests-dist/tests/test.js",
-
     "clean": "npm run clean:lib && npm run clean:tests",
     "clean:tests": "rimraf tests-dist",
     "clean:lib": "rimraf dist",
-
     "clean-build": "npm run clean && npm run build",
     "build": "npm run build:lib && npm run build:tests",
     "build:lib": "tsc -p src/.",
     "build:tests": "tsc -p tests/.",
-
     "lint": "tslint --project src/. && tslint --project tests/.",
-
     "prepublish": "npm run lint && npm run clean-build"
   },
   "repository": {
@@ -36,7 +32,7 @@
   "devDependencies": {
     "rimraf": "^2.6.2",
     "tslint": "^5.7.0",
-    "typescript": "^2.5.2"
+    "typescript": "^2.5.3"
   },
   "dependencies": {
     "mobx": "^3.3.0",
