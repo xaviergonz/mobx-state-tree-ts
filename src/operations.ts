@@ -90,7 +90,7 @@ export function protect<S, M, WM>(target: IStateTreeNode<S, M, WM>): IProtectedS
   return target as IProtectedStateTreeNode<S, M, WM>;
 }
 
-export function resolveIdentifier<S, M, WM, A, V>(
+export function resolveIdentifier<S, M, WM>(
   type: IType<S, M, WM>,
   target: IProtectedStateTreeNode<any, any, any>,
   id: string | number

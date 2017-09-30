@@ -10,12 +10,12 @@ export function refinement<S, M, WM>(t1: IComplexType<S, M, WM>, predicate: Refi
 export function refinement<S, M, WM>(t1: IType<S, M, WM>, predicate: RefinementPredicateType<S>, message?: RefinementMessageType): IType<S, M, WM>;
 
 // with name
-export function refinement<S, M, WM>(name: string, t1: IModelType<S, M, WM>, predicate: RefinementPredicateType<S>, message?: RefinementMessageType): IModelType<S, M, M>;
-export function refinement<S, M, WM>(name: string, t1: IComplexType<S, M, WM>, predicate: RefinementPredicateType<S>, message?: RefinementMessageType): IComplexType<S, M, M>;
-export function refinement<S, M, WM>(name: string, t1: IType<S, M, WM>, predicate: RefinementPredicateType<S>, message?: RefinementMessageType): IType<S, M, M>;
+export function refinement<S, M, WM>(name: string, t1: IModelType<S, M, WM>, predicate: RefinementPredicateType<S>, message?: RefinementMessageType): IModelType<S, M, WM>;
+export function refinement<S, M, WM>(name: string, t1: IComplexType<S, M, WM>, predicate: RefinementPredicateType<S>, message?: RefinementMessageType): IComplexType<S, M, WM>;
+export function refinement<S, M, WM>(name: string, t1: IType<S, M, WM>, predicate: RefinementPredicateType<S>, message?: RefinementMessageType): IType<S, M, WM>;
 
 // base
-export function refinement<S, M, WM>(...args: any[]): IType<S, M, M> {
+export function refinement<S, M, WM>(...args: any[]): IType<S, M, WM> {
   const newArgs = args.filter((a) => a !== undefined); // skip undefined args
   return (mbst.types.refinement as any)(...newArgs);
 }
