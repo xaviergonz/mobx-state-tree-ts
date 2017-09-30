@@ -7,7 +7,7 @@ export const primitives = {
   null: (mbst.types.null as any) as ISimpleType<null>,
   number: (mbst.types.number as any) as ISimpleType<number>,
   string: (mbst.types.string as any) as ISimpleType<string>,
-  Date: (mbst.types.Date as any) as IType<number, (Date | number)>,
+  Date: (mbst.types.Date as any) as IType<number, Date>,
 
   // undefined is not implemented, use optProp instead
 };

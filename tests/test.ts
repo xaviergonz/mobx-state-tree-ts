@@ -1,5 +1,7 @@
 import { getSnapshot, onAction, protect, resolveIdentifier, resolvePath, types, unprotect } from '../src/';
 
+// NOTE THAT SINCE THE LAST CHANGE READONLY CHECKS DO NOT WORK ANYMORE, SINCE THE TS COMPILER WOULD GET HANG IF WE USED A SEPARATE READONLY AND WRITE MODEL
+
 // anything other than 4 or 'hi' or 'hello' is compile error
 const typesHiOr4 = types.union(types.literal(4), types.literal('hi'), types.literal('hello'));
 const positiveNumber = types.refinement('positive number', types.number, (x) => x >= 0);
@@ -79,7 +81,8 @@ node.setASquared();
 node.setXSquared();
 // node.x = 5; // fails since it is protected by default
 
-const unprotectedNode = unprotect(node);
+unprotect(node);
+const unprotectedNode = node;
 unprotectedNode.a = 5; // ok
 unprotectedNode.subModel1.subX = 10; // ok
 unprotectedNode.subModel1.subY = 4;
@@ -91,7 +94,7 @@ unprotectedNode.subModel1 = subModel.create({ // good, we can assign a node
 unprotectedNode.subModel1 = { // kinda MEH, we can assign a snapshot but we need to typecast it to the writeable node type
   id: '1',
   subX: 7
-} as typeof subModel.UnprotectedType;
+} as typeof subModel.Type;
 const aaa: string | number = unprotectedNode.subModel1.subY;
 const colorStr: string | null = unprotectedNode.color2;
 unprotectedNode.color2 = 'red';
@@ -192,11 +195,12 @@ console.log(getSnapshot(store));
 
 // store.books[0] = {}; // good, not allowed
 
-const unprotectedStore = unprotect(store);
+unprotect(store);
+const unprotectedStore = store;
 unprotectedStore.books[0].price = 5; // good we can
-unprotectedStore.books[0].date = 12345;
+unprotectedStore.books[0].date = new Date(12345);
 console.log(unprotectedStore.books[0].date);
-unprotectedStore.books[0].date = Date.now();
+unprotectedStore.books[0].date = new Date();
 console.log(unprotectedStore.books[0].date);
 console.log(getSnapshot(unprotectedStore));
 
@@ -204,13 +208,13 @@ unprotectedStore.books[0] = Book.create({
   title: 'some title',
   price: 4,
   date: 1234
-}) as typeof Book.UnprotectedType; // not ok, shame this is needed when the model is unprotected
+}) as typeof Book.Type; // not ok, shame this is needed when the model is unprotected
 
-unprotectedStore.booksMap.set('111', {
+unprotectedStore.booksMap.set('111', Book.create({
   title: 'title set on setter',
   price: 24.95,
   date: 1234,
-} as typeof Book.UnprotectedType);
+}));
 unprotectedStore.booksMap.get('111')!.title = 'title set on getter';
 console.log('MAP TEST 2', getSnapshot(unprotectedStore));
 
@@ -222,7 +226,7 @@ const m1m2node = theunion.create({
   x: 2,
 });
 console.log(getSnapshot(m1m2node));
-const subModel111 = resolvePath<typeof subModel.ProtectedType>(node, '/subModel1');
+const subModel111 = resolvePath<typeof subModel.Type>(node, '/subModel1');
 if (subModel111) {
   console.log(subModel111.subY);
 }

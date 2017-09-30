@@ -1,5 +1,4 @@
 # mobx-state-tree-ts
-# mobx-state-tree-ts
 ###### Better typescript type definitions for mobx-state-tree
 
 The only difference with the public API of mobx-state-tree is how models are created.
@@ -32,8 +31,9 @@ const Book = types.model('Book')
 
 While the syntax looks a bit worse, thanks to that change you get a much improved typescript experience for mobx-state-tree.
 
-Also whenever you want to assign a submodel snapshot to a model variable / map / array you will need to typecast it to ```typeof submodel.ProtectedType/UnprotectedType```
-or use create on the snapshot, for example:
+Also whenever you want to assign a submodel snapshot to a model variable / map / array you will need to either use create to create a node instance from the snapshot (recommended) or typecast it to ```typeof submodel.Type```.
+
+For example:
 ```js
 import { types } from 'mobx-state-tree-ts'; // always import stuff from here instead of mobx-state-tree
 
@@ -48,18 +48,13 @@ const TwoBooks = types.model()
 
 // create a twoBooks instance, then...
 
-// either this
+// either this (recommended)
 twoBooks.book1 = Book.create({
   title: 'some book'
-}); // if the model is unprotected then as typeof Book.UnprotectedType is needed
+}); 
 
 // or this
 twoBooks.book1 = {
   title: 'some book'
-} as typeof Book.ProtectedType; 
+} as typeof Book.Type; 
 ```
-
-As an extra, each model includes the following types:
-* **SnapshotType:** the type for the model's snapshot
-* **ProtectedType:** the type for a protected node instance of the model, the same as **Type**
-* **UnprotectedType:** the type for an unprotected node instance of the model

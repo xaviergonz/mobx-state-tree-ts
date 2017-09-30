@@ -72,20 +72,20 @@ export {
   unprotect
 };
 
-export function applySnapshot<S, M, WM>(target: IStateTreeNode<S, M>, snapshot: S): void {
+export function applySnapshot<S, M>(target: IStateTreeNode<S, M>, snapshot: S): void {
   mbst.applySnapshot(target, snapshot);
 }
 
 // generated snapshots are readonly
-export function getSnapshot<S, M, WM>(target: IStateTreeNode<S, M>): DeepReadonly<S> {
+export function getSnapshot<S, M>(target: IStateTreeNode<S, M>): S {
   return mbst.getSnapshot(target);
 }
 
-export function getType<S, M, WM>(object: IStateTreeNode<S, M>): IType<S, M> {
+export function getType<S, M>(object: IStateTreeNode<S, M>): IType<S, M> {
   return mbst.getType(object) as any;
 }
 
-export function isStateTreeNode<S, M, WM>(object: IStateTreeNode<S, M>): object is IStateTreeNode<S, M> {
+export function isStateTreeNode<S, M>(object: IStateTreeNode<S, M>): object is IStateTreeNode<S, M> {
   return mbst.isStateTreeNode(object);
 }
 

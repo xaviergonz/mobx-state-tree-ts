@@ -31,7 +31,7 @@ export type IComplexType<S, M> = IType<S , M> & {
   create(snapshot?: S , environment?: any): IStateTreeNode<S, M>;
 };
 
-export type IModelType<S, M> /* extends mbst.IModelType<S, WM> */ = IComplexType<S , M> & {
+export type IModelType<S, M> /* extends mbst.IModelType<S, M> */ = IComplexType<S , M> & {
   named(newName: string): IModelType<S, M>;
 
   // no props, use prop, optProp or maybeProp instead
