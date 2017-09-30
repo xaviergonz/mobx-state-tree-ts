@@ -1,6 +1,6 @@
 import * as mbst from 'mobx-state-tree';
 // noinspection ES6UnusedImports
-import { ISimpleType, IType, ReadonlyDate } from '../';
+import { ISimpleType, IType } from '../';
 
 export const primitives = {
   boolean: (mbst.types.boolean as any) as ISimpleType<boolean>,
