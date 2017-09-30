@@ -1,6 +1,8 @@
 # mobx-state-tree-ts
 ###### Better typescript type definitions for mobx-state-tree
 
+[![npm version](https://badge.fury.io/js/mobx-state-tree-ts.svg)](https://badge.fury.io/js/mobx-state-tree-ts)
+
 The only difference with the public API of mobx-state-tree is how models are created.
 
 Basically instead of this:
