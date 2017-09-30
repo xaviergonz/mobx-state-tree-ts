@@ -1,5 +1,6 @@
 import * as mbst from 'mobx-state-tree';
-import { IComplexType, IModelType, IType } from '../';
+import { IComplexType, IType } from 'mobx-state-tree';
+import { IModelType } from '../';
 
 export type RefinementMessageType = string | ((v: any) => string);
 export type RefinementPredicateType<S> = (sn: S) => boolean;

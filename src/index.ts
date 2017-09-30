@@ -1,7 +1,7 @@
 // noinspection ES6UnusedImports
 import { IArrayChange, IArraySplice, IKeyValueMap, IListenable, IObservableArray, Lambda } from 'mobx';
 // noinspection ES6UnusedImports
-import { IExtendedObservableMap } from 'mobx-state-tree';
+import { IComplexType, IExtendedObservableMap, ISimpleType, IType } from 'mobx-state-tree';
 // noinspection ES6UnusedImports
 import * as interfaces from './interfaces';
 // noinspection ES6UnusedImports

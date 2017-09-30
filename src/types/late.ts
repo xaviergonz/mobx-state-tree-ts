@@ -1,5 +1,6 @@
 import * as mbst from 'mobx-state-tree';
-import { IComplexType, IModelType, IType } from '../';
+import { IComplexType, IType } from 'mobx-state-tree';
+import { IModelType } from '../';
 
 // without name
 export function late<S, M>(type: () => IModelType<S, M>): IModelType<S, M>;

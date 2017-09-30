@@ -91,7 +91,7 @@ unprotectedNode.subModel1 = subModel.create({ // good, we can assign a node
   id: '1',
   subX: 8,
 });
-unprotectedNode.subModel1 = { // kinda MEH, we can assign a snapshot but we need to typecast it to the writeable node type
+unprotectedNode.subModel1 = { // kinda MEH, we can assign a snapshot but we need to typecast it to the node type
   id: '1',
   subX: 7
 } as typeof subModel.Type;

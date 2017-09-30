@@ -1,5 +1,5 @@
 import * as mbst from 'mobx-state-tree';
-import { IComplexType, IType } from '../';
+import { IComplexType, IType } from 'mobx-state-tree';
 
 // up to 10 types, after that the type is lost as any
 // it is ok to upgrade/downgrade it to IComplexType since unions loose their ability to be composed (though they still can be snapshotted)

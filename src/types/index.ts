@@ -1,38 +1,43 @@
 // noinspection ES6UnusedImports
-import { IArrayChange, IArraySplice, IKeyValueMap, IListenable, IObservableArray, Lambda } from 'mobx';
+import { IObservableArray } from 'mobx';
 // noinspection ES6UnusedImports
-import { IExtendedObservableMap } from 'mobx-state-tree';
+import * as mbst from 'mobx-state-tree';
+import { IComplexType, IExtendedObservableMap, ISimpleType, IType } from 'mobx-state-tree';
 // noinspection ES6UnusedImports
-import { DeepReadonly, IType } from '../';
-import * as array from './array';
+import { IContextEntry } from 'mobx-state-tree/dist/types/type-checker';
+// noinspection ES6UnusedImports
+import { IModelType } from '../';
 import * as compose from './compose';
-import * as enumeration from './enumeration';
-import * as frozen from './frozen';
 import * as identifier from './identifier';
 import * as late from './late';
-import * as literal from './literal';
-import * as map from './map';
 import * as model from './model';
-import { primitives } from './primitives';
 import * as reference from './reference';
 import * as refinement from './refinement';
 import * as union from './union';
 
+
 // tslint:disable-next-line:no-default-export
 export default {
-  array: array.array,
+  array: mbst.types.array,
   compose: compose.compose,
-  frozen: frozen.frozen,
+  frozen: mbst.types.frozen,
   identifier: identifier.identifier,
   late: late.late,
-  literal: literal.literal,
-  map: map.map,
+  literal: mbst.types.literal,
+  map: mbst.types.map,
   model: model.model,
-  ...primitives,
+
+  boolean: mbst.types.boolean,
+  null: mbst.types.null,
+  number: mbst.types.number,
+  string: mbst.types.string,
+  Date: mbst.types.Date,
+  undefined: mbst.types.undefined,
+
   reference: reference.reference,
   refinement: refinement.refinement,
   union: union.union,
-  enumeration: enumeration.enumeration,
+  enumeration: mbst.types.enumeration,
 
   // maybe is implemented as maybeProp('x', xType)
   // optional is implemented as optProp('x', default, xType)

@@ -1,5 +1,5 @@
 import * as mbst from 'mobx-state-tree';
-import { ISimpleType } from '../interfaces';
+import { ISimpleType } from 'mobx-state-tree';
 import types from './';
 
 // an identifier can only be of a string or a number. if there's no type then string is assumed
