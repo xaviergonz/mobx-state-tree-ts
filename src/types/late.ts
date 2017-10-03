@@ -17,10 +17,10 @@ export function late<S, M>(...args: any[]): IType<S, M> {
   if (typeof args[0] === 'string') {
     const name = args[0];
     const type = args[1];
-    return mbst.types.late(name, type) as any;
+    return mbst.types.late(name, type);
   }
   else {
     const type = args[0];
-    return mbst.types.late(type) as any;
+    return mbst.types.late(type);
   }
 }

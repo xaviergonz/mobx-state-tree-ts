@@ -97,7 +97,7 @@ export function resolveIdentifier<S, M>(
   target: IStateTreeNode,
   id: string | number
 ): (IStateTreeNode & M) | undefined {
-  return mbst.resolveIdentifier(type as any, target, id) as any;
+  return mbst.resolveIdentifier(type, target, id);
 }
 
 export function resolvePath<T>(target: IStateTreeNode, path: string): T | undefined {

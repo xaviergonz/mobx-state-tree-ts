@@ -9,9 +9,9 @@ export function identifier(subType: typeof types.number): typeof types.number;
 // base
 export function identifier<T extends string | number>(subType?: ISimpleType<T>): ISimpleType<T> {
   if (subType === undefined) {
-    return mbst.types.identifier() as any;
+    return mbst.types.identifier();
   }
   else {
-    return mbst.types.identifier(subType as any) as any;
+    return mbst.types.identifier(subType);
   }
 }
