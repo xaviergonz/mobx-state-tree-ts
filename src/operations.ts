@@ -5,6 +5,7 @@ import {
   applyAction,
   applyPatch,
   clone,
+  createActionTrackingMiddleware,
   decorate,
   destroy,
   detach,
@@ -33,6 +34,7 @@ import {
   protect,
   recordActions,
   recordPatches,
+  typecheck,
   unescapeJsonPath,
   unprotect,
   walk
@@ -75,7 +77,9 @@ export {
   unprotect,
   getSnapshot,
   getType,
-  isStateTreeNode
+  isStateTreeNode,
+  createActionTrackingMiddleware,
+  typecheck,
 };
 
 export function applySnapshot<S>(target: IStateTreeNode & ISnapshottable<S>, snapshot: S): void {
