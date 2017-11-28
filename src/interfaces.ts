@@ -53,6 +53,12 @@ export type IModelType<S, M> = Omit<mbst.IModelType<S, M>, 'props' | 'actions' |
       M & ExtraA
       >;
 
+  volatile<ExtraP extends object>(fn: (self: M & IStateTreeNode) => ExtraP):
+    IModelType<
+      S,
+      M & ExtraP
+      >;
+
   // noinspection ReservedWordAsName
   extends<
       // tslint:disable-next-line:ban-types

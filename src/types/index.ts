@@ -2,9 +2,10 @@
 import { IObservableArray } from 'mobx';
 // noinspection ES6UnusedImports
 import * as mbst from 'mobx-state-tree';
+// noinspection ES6UnusedImports
 import { IComplexType, IExtendedObservableMap, ISimpleType, IType } from 'mobx-state-tree';
 // noinspection ES6UnusedImports
-import { IContextEntry } from 'mobx-state-tree/dist/types/type-checker';
+import { IContextEntry } from 'mobx-state-tree/dist/core/type/type-checker';
 // noinspection ES6UnusedImports
 import { IModelType } from '../';
 import * as compose from './compose';
