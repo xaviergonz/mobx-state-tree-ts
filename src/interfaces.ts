@@ -59,8 +59,7 @@ export type IModelType<S, M> = Omit<mbst.IModelType<S, M>, 'props' | 'actions' |
       M & ExtraP
       >;
 
-  // noinspection ReservedWordAsName
-  extends<
+  extend<
       // tslint:disable-next-line:ban-types
       ExtraA extends { [name: string]: Function },
       ExtraV extends object
@@ -70,8 +69,7 @@ export type IModelType<S, M> = Omit<mbst.IModelType<S, M>, 'props' | 'actions' |
       M & ExtraA & ExtraV
       >;
 
-  // noinspection ReservedWordAsName
-  extends<
+  extend<
     // tslint:disable-next-line:ban-types
     ExtraA extends { [name: string]: Function }
     >(f: (self: M & IStateTreeNode) => { actions: ExtraA }):
@@ -80,8 +78,7 @@ export type IModelType<S, M> = Omit<mbst.IModelType<S, M>, 'props' | 'actions' |
       M & ExtraA
       >;
 
-  // noinspection ReservedWordAsName
-  extends<
+  extend<
     // tslint:disable-next-line:ban-types
     ExtraV extends object
     >(f: (self: M & IStateTreeNode) => { views: ExtraV }):
