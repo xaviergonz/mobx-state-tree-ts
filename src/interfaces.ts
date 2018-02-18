@@ -1,5 +1,4 @@
 import * as mbst from 'mobx-state-tree';
-import { IStateTreeNode } from 'mobx-state-tree';
 import { Omit, SinglePropertyObject } from './utils';
 
 // tslint:disable:interface-over-type-literal
@@ -8,6 +7,8 @@ import { Omit, SinglePropertyObject } from './utils';
 // S = Snapshot,
 // M = Model
 
+export type ISnapshottable<S> = mbst.ISnapshottable<S>;
+export type IStateTreeNode = mbst.IStateTreeNode;
 export type IType<S, M> = mbst.IType<S, M>;
 export type IComplexType<S, M> = mbst.IComplexType<S, M>;
 

@@ -22,11 +22,9 @@ import {
   getType,
   hasParent,
   isAlive,
-  ISnapshottable,
   isProtected,
   isRoot,
   isStateTreeNode,
-  IStateTreeNode,
   IType,
   onAction,
   onPatch,
@@ -39,6 +37,8 @@ import {
   unprotect,
   walk
 } from 'mobx-state-tree';
+
+import { ISnapshottable, IStateTreeNode } from './interfaces';
 
 // tslint:disable:interface-over-type-literal
 // tslint:disable:no-empty-interface
