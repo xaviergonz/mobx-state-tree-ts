@@ -117,9 +117,10 @@ if (subModelRef3) {
 }
 
 
-const nodeSnapshot = getSnapshot(node);
+const nodeSnapshot = getSnapshot(node) as typeof m.SnapshotType; // this kind of sucks, since we need to cast it to the snapshot type
 // nodeSnapshot.a = 40; // good, snapshots are protected
 console.log(nodeSnapshot);
+console.log(nodeSnapshot.a);
 // nodeSnapshot.setASquared(); // error: the snapshot does not have any actions
 // nodeSnapshot.xSquared; // error: the snapshot does not have any views
 

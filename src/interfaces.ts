@@ -12,6 +12,13 @@ export type ISnapshottable<S> = mbst.ISnapshottable<S>;
 export type IType<S, M> = mbst.IType<S, M>;
 export type IComplexType<S, M> = mbst.IComplexType<S, M>;
 
+// tslint:disable-next-line:ban-types
+export type ActionMember = Function;
+export type ActionObject = { [name: string]: ActionMember };
+
+export type ViewMember = Exclude<any, (...args: any[]) => void>;
+export type ViewObject = { [name: string]: ViewMember };
+
 // no props, use prop, optProp or maybeProp instead
 export type IModelType<S, M> = Omit<mbst.IModelType<S, M>, 'props' | 'actions' | 'views' | 'preProcessSnapshot'> & {
 
@@ -39,15 +46,14 @@ export type IModelType<S, M> = Omit<mbst.IModelType<S, M>, 'props' | 'actions' |
 
   preProcessSnapshot(fn: (snapshot: S) => S): IModelType<S, M>;
 
-  views<ExtraV extends object>(f: (self: M & IStateTreeNode) => ExtraV):
+  views<ExtraV extends ViewObject>(f: (self: M & IStateTreeNode) => ExtraV):
     IModelType<
       S,
       M & ExtraV
       >;
 
   actions<
-      // tslint:disable-next-line:ban-types
-      ExtraA extends { [name: string]: Function }
+      ExtraA extends ActionObject
     >(f: (self: M & IStateTreeNode) => ExtraA):
     IModelType<
       S,
@@ -60,31 +66,26 @@ export type IModelType<S, M> = Omit<mbst.IModelType<S, M>, 'props' | 'actions' |
       M & ExtraP
       >;
 
-  // noinspection ReservedWordAsName
-  extends<
-      // tslint:disable-next-line:ban-types
-      ExtraA extends { [name: string]: Function },
-      ExtraV extends object
+  extend<
+      ExtraA extends ActionObject,
+      ExtraV extends ViewObject
     >(f: (self: M & IStateTreeNode) => { actions: ExtraA, views: ExtraV }):
     IModelType<
       S,
       M & ExtraA & ExtraV
       >;
 
-  // noinspection ReservedWordAsName
-  extends<
+  extend<
     // tslint:disable-next-line:ban-types
-    ExtraA extends { [name: string]: Function }
+    ExtraA extends ActionObject
     >(f: (self: M & IStateTreeNode) => { actions: ExtraA }):
     IModelType<
       S,
       M & ExtraA
       >;
 
-  // noinspection ReservedWordAsName
-  extends<
-    // tslint:disable-next-line:ban-types
-    ExtraV extends object
+  extend<
+    ExtraV extends ViewObject
     >(f: (self: M & IStateTreeNode) => { views: ExtraV }):
     IModelType<
       S,
