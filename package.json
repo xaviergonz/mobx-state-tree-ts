@@ -1,6 +1,6 @@
 {
   "name": "mobx-state-tree-ts",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Better typescript type definitions for mobx-state-tree",
   "files": [
     "dist/**/*"
