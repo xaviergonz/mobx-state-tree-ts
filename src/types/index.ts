@@ -19,27 +19,25 @@ import * as union from './union';
 
 // tslint:disable-next-line:no-default-export
 export default {
-  array: mbst.types.array,
+  enumeration: mbst.types.enumeration,
+  model: model.model,
   compose: compose.compose,
+  custom: mbst.types.custom,
+  reference: reference.reference,
+  union: union.union,
+  // optional is implemented as optProp('x', default, xType)
+  literal: mbst.types.literal,
+  // maybe is implemented as maybeProp('x', xType)
+  refinement: refinement.refinement,
+  string: mbst.types.string,
+  boolean: mbst.types.boolean,
+  number: mbst.types.number,
+  Date: mbst.types.Date,
+  map: mbst.types.map,
+  array: mbst.types.array,
   frozen: mbst.types.frozen,
   identifier: identifier.identifier,
   late: late.late,
-  literal: mbst.types.literal,
-  map: mbst.types.map,
-  model: model.model,
-
-  boolean: mbst.types.boolean,
-  null: mbst.types.null,
-  number: mbst.types.number,
-  string: mbst.types.string,
-  Date: mbst.types.Date,
   undefined: mbst.types.undefined,
-
-  reference: reference.reference,
-  refinement: refinement.refinement,
-  union: union.union,
-  enumeration: mbst.types.enumeration,
-
-  // maybe is implemented as maybeProp('x', xType)
-  // optional is implemented as optProp('x', default, xType)
+  null: mbst.types.null,
 };

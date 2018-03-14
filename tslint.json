@@ -102,7 +102,6 @@
       true,
       "allow-undefined-check"
     ],
-    "typeof-compare": true,
     "use-isnan": true,
     "eofline": true,
     "indent": [

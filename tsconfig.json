@@ -7,10 +7,9 @@
     "module": "commonjs",
     /* Specify library files to be included in the compilation:  */
     "lib": [
-      "es2016",
+      "es2017",
       "dom",
-      "dom.iterable",
-      "es2017.object"
+      "dom.iterable"
     ],
     // "allowJs": true,                       /* Allow javascript files to be compiled. */
     // "checkJs": true,                       /* Report errors in .js files. */

@@ -3,6 +3,7 @@ import { Omit, SinglePropertyObject } from './utils';
 
 // tslint:disable:interface-over-type-literal
 // tslint:disable:no-empty-interface
+// tslint:disable:unified-signatures
 
 // S = Snapshot,
 // M = Model
@@ -14,8 +15,12 @@ export type IComplexType<S, M> = mbst.IComplexType<S, M>;
 
 // no props, use prop, optProp or maybeProp instead
 export type IModelType<S, M> = Omit<mbst.IModelType<S, M>, 'props' | 'actions' | 'views' | 'preProcessSnapshot'> & {
-
   // needs implementation
+  prop<TPropName extends string, S1, M1>(pname: TPropName, type: IComplexType<S1, M1>):
+    IModelType<
+      S & SinglePropertyObject<TPropName, S1>,
+      M & SinglePropertyObject<TPropName, M1 & IStateTreeNode>
+      >;
   prop<TPropName extends string, S1, M1>(pname: TPropName, type: IType<S1, M1>):
     IModelType<
       S & SinglePropertyObject<TPropName, S1>,
@@ -23,6 +28,11 @@ export type IModelType<S, M> = Omit<mbst.IModelType<S, M>, 'props' | 'actions' |
       >;
 
   // needs implementation
+  optProp<TPropName extends string, S1, M1>(pname: TPropName, type: IComplexType<S1, M1>, defValue: S1 | (() => S1)):
+    IModelType<
+      S & Partial<SinglePropertyObject<TPropName, S1>>,
+      M & SinglePropertyObject<TPropName, M1 & IStateTreeNode>
+      >;
   optProp<TPropName extends string, S1, M1>(pname: TPropName, type: IType<S1, M1>, defValue: S1 | (() => S1)):
     IModelType<
       S & Partial<SinglePropertyObject<TPropName, S1>>,
@@ -30,6 +40,11 @@ export type IModelType<S, M> = Omit<mbst.IModelType<S, M>, 'props' | 'actions' |
       >;
 
   // needs implementation
+  maybeProp<TPropName extends string, S1, M1>(pname: TPropName, type: IComplexType<S1, M1>):
+    IModelType<
+      S & Partial<SinglePropertyObject<TPropName, S1 | null>>,
+      M & SinglePropertyObject<TPropName, (M1 & IStateTreeNode) | null>
+      >;
   maybeProp<TPropName extends string, S1, M1>(pname: TPropName, type: IType<S1, M1>):
     IModelType<
       S & Partial<SinglePropertyObject<TPropName, S1 | null>>,
