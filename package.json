@@ -30,11 +30,11 @@
   },
   "homepage": "https://github.com/xaviergonz/mobx-state-tree-ts#readme",
   "devDependencies": {
-    "mobx": "^4.0.0",
-    "mobx-state-tree": "^2.0.0",
+    "mobx": "^4.3.0",
+    "mobx-state-tree": "^2.0.5",
     "rimraf": "^2.6.2",
-    "tslint": "^5.9.1",
-    "typescript": "^2.7.2"
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.1"
   },
   "peerDependencies": {
     "mobx": "^4.0.0",
