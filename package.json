@@ -1,6 +1,6 @@
 {
   "name": "mobx-state-tree-ts",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "Better typescript type definitions for mobx-state-tree",
   "files": [
     "dist/**/*"
@@ -30,11 +30,11 @@
   },
   "homepage": "https://github.com/xaviergonz/mobx-state-tree-ts#readme",
   "devDependencies": {
-    "mobx": "^4.0.0",
-    "mobx-state-tree": "^2.0.0",
+    "mobx": "^4.3.0",
+    "mobx-state-tree": "^2.0.5",
     "rimraf": "^2.6.2",
-    "tslint": "^5.9.1",
-    "typescript": "^2.7.2"
+    "tslint": "^5.10.0",
+    "typescript": "2.8.*"
   },
   "peerDependencies": {
     "mobx": "^4.0.0",
