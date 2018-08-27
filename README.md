@@ -1,4 +1,6 @@
-# mobx-state-tree-ts
+# mobx-state-tree-ts (DEPRECATED)
+## since v3.2.x mobx-state-tree typescript definitions are a lot more accurate, so use that instead! :D
+
 ###### Better typescript type definitions for mobx-state-tree
 
 [![npm version](https://badge.fury.io/js/mobx-state-tree-ts.svg)](https://badge.fury.io/js/mobx-state-tree-ts)
